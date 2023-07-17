@@ -47,7 +47,7 @@ class DataController extends Controller
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
                 $data[$key]["code"] = $country->code;
-                $data[$key]["flag"] = env('APP_URL') . 'Admin/images/country/' . $country->flag;
+                $data[$key]["flag"] = env('APP_URL') . 'Admin/images/countries/' . $country->flag;
                 if ($request->header('lang') == "en") {
                     $data[$key]["name"] = $country->name_en;
                 } elseif ($request->header('lang') == "tr") {
