@@ -1,0 +1,2914 @@
+{
+	"info": {
+		"_postman_id": "fadfe1f2-a892-4e0a-ac83-f94826157415",
+		"name": "Egazah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14394640"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone",
+									"value": "1472589637",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "device_token",
+									"value": "wefejwkhfkjehfkeghfkgewhkf",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/login",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ahmed",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "admbins@gmail.cno3m",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0591351430",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "device_token",
+									"value": "dkjfhdshflshdflkshflshdf",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "0",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "nationality",
+									"value": "egypt",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "11-11-11111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/register",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyOtp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "269|43e26XKH47KCMG1fclaWBMfrp0ORhlXVeMM8jMyz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "otp",
+									"value": "6891",
+									"type": "text"
+								},
+								{
+									"key": "device_token",
+									"value": "fesfedfsdfsdf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/verifyOtp",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"verifyOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resendOtp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|eEOve56rkXrpQ9fjDBljwwOLmOFdaaY09jJi9CTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/resendOtp",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"resendOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone",
+									"value": "1234567896",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/forgetPassword",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone",
+									"value": "1234567896",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/changePassword",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|eEOve56rkXrpQ9fjDBljwwOLmOFdaaY09jJi9CTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/logout",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAccount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|eEOve56rkXrpQ9fjDBljwwOLmOFdaaY09jJi9CTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/deleteAccount",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|eEOve56rkXrpQ9fjDBljwwOLmOFdaaY09jJi9CTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "old_password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/updatePassword",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "112|gpXzfbAPBwSE9Y5E9qFlZQVsxEMfHH8CKB9FOfLz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ahmed",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ahmed@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "option",
+									"type": "file",
+									"src": "/C:/Users/Ahmed/Desktop/202110810120531FV.jpg",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "0",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "nationality",
+									"value": "egypt",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "11-11-11111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/updateProfile",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfileData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "126|20Wu9D0Q7xabLT0FMYGAOMqiEsxqKShjZPOujjcV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getProfileData",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getProfileData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNotifications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "121|zXn9ZkPmiBAVop21Q8bj2qIDC8RMnIAAbTJQxt9e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getNotifications",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getNotifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "121|zXn9ZkPmiBAVop21Q8bj2qIDC8RMnIAAbTJQxt9e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "notofication_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/deleteNotification",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteNotification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "seeNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "121|zXn9ZkPmiBAVop21Q8bj2qIDC8RMnIAAbTJQxt9e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "notofication_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/seeNotification",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"seeNotification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCommenets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getCommenets",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getCommenets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "home",
+			"item": [
+				{
+					"name": "homeScreen",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/homeScreen",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"homeScreen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "257|boe18kwdeFfnxSTnIj79MXVcNrXi8PxklFmBExTr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getAds?city_id=all",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getAds"
+							],
+							"query": [
+								{
+									"key": "city_id",
+									"value": "all",
+									"description": "option"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "splach",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/splach",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"splach"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAdsByCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getAdsByCategory?category_id=3",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getAdsByCategory"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "3",
+									"description": "option"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tourGuide",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/tourGuide",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"tourGuide"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_id",
+									"value": "5",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "offers",
+									"value": "true",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "privace",
+									"value": "true",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "min",
+									"value": "0",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "max",
+									"value": "100",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "street_id",
+									"value": "1",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "rate",
+									"value": "5",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "word",
+									"value": "crust",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "travel_type",
+									"value": "6",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "chalets",
+									"value": "chalets",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "camp",
+									"value": "camp",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/filter",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRelatedAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getRelatedAds?category_id=3&ads_id=4",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getRelatedAds"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "3",
+									"description": "option"
+								},
+								{
+									"key": "ads_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data",
+			"item": [
+				{
+					"name": "getCountres",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getCountres",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getCountres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "about",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/about",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"about"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "socialMedia",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/socialMedia",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"socialMedia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/info",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "questions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/questions",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "terms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/terms",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"terms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "privacies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/privacies",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"privacies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add Service",
+			"item": [
+				{
+					"name": "addService",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "street_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "نقل من الرياض الي جدة",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "نقل من الرياض الي جدة",
+									"type": "text"
+								},
+								{
+									"key": "area",
+									"value": "2.5 k.m",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "eg",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "2.222222",
+									"type": "text"
+								},
+								{
+									"key": "long",
+									"value": "2.2222222",
+									"type": "text"
+								},
+								{
+									"key": "insurance",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "private_house",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "Shared_accommodation",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "animals",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "council",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "kitchen_table",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "visits",
+									"value": "0",
+									"description": "{0,1}",
+									"type": "text"
+								},
+								{
+									"key": "bed_room",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "Bathrooms",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "terms[]",
+									"value": "نقل من الرياض الي جدة",
+									"type": "text"
+								},
+								{
+									"key": "families",
+									"value": "1",
+									"description": "0, 1",
+									"type": "text"
+								},
+								{
+									"key": "insurance_value",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "smoking",
+									"value": "0",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "camp",
+									"value": "0",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "chalets",
+									"value": "0",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "accompanying[]",
+									"value": "12",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "insurance",
+									"value": "1",
+									"description": "0,1",
+									"type": "text"
+								},
+								{
+									"key": "insurance_value",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addService",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/getCities",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getCities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStreets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/getStreets?city_id=1",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getStreets"
+							],
+							"query": [
+								{
+									"key": "city_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStreet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/getStreet?street_id=1",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getStreet"
+							],
+							"query": [
+								{
+									"key": "street_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccompanying",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/getAccompanying",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getAccompanying"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkUserDetials",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/checkUserDetials",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"checkUserDetials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUserDetials",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_number",
+									"value": "614168771",
+									"type": "text"
+								},
+								{
+									"key": "Residence_permit",
+									"value": "04068468",
+									"type": "text"
+								},
+								{
+									"key": "IBAN",
+									"value": "4554535",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addUserDetials",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addUserDetials"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favourite",
+			"item": [
+				{
+					"name": "addFavourite",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ads_id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addFavourite",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addFavourite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFavouries",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/getFavouries",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getFavouries"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "myAds",
+			"item": [
+				{
+					"name": "deleteAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ads_id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/deleteAds",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteAds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "myAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/myAds",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"myAds"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wheels",
+			"item": [
+				{
+					"name": "getWheels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://visooft-code.com/api/wheel_of_fortunes",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"wheel_of_fortunes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addWheel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "wheel_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addWheel",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addWheel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "getWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getWallet",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getWallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "value",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addWallet",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addWallet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "makeOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "121|zXn9ZkPmiBAVop21Q8bj2qIDC8RMnIAAbTJQxt9e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "count",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "house_id",
+									"value": "38",
+									"type": "text"
+								},
+								{
+									"key": "from",
+									"value": "26-5-2023",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "30-5-2023",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "22.22222",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "long",
+									"value": "22.22222",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "30-5-2023",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "2:20",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Ahmed",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ahmed@gmail.com",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01236486",
+									"description": "option",
+									"type": "text"
+								},
+								{
+									"key": "payment_type",
+									"value": "wallet",
+									"description": "cash,online,wallet",
+									"type": "text"
+								},
+								{
+									"key": "coupon",
+									"value": "efef",
+									"description": "option",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/order",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "338|ADzS6eVJPTQaD71GBW7hyVKTvm8pks29iGRvb0Cx",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/getOrders",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"getOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchOrders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "date",
+									"value": "2023-05-26",
+									"description": "option"
+								},
+								{
+									"key": "word",
+									"value": "AAA",
+									"description": "option",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/searchOrders",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"searchOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCommenet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ads_id",
+									"value": "22",
+									"description": "required"
+								},
+								{
+									"key": "commenet",
+									"value": "sssssssssssssssssssssssss",
+									"description": "required"
+								},
+								{
+									"key": "rate",
+									"value": "3",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addCommenet",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addCommenet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCoupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "18|bn0OzzXin0Evjt5u5hyN8N8bke36OpBqwO6izv31",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coupon",
+									"value": "qqqq",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addCoupon",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addCoupon"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "travel group",
+			"item": [
+				{
+					"name": "travel_type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/travel_type",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"travel_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "travel_country",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/travel_country",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"travel_country"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addTravel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "148|TGpICTiPFAr02OlVSEbRCkX9a0XA8cJ4pMvW7ro0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "travel_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "travel_country_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "group_travel",
+									"value": "1",
+									"description": "(1,0)",
+									"type": "text"
+								},
+								{
+									"key": "indivdual_travel",
+									"value": "0",
+									"description": "(1,0)",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "from",
+									"value": "2023-6-1",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "2023-6-3",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ddddddddddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "iban",
+									"value": "58252752",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "terms[]",
+									"value": "hjjretrsh",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "flight_tickets",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "main_meal",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "housing_included",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "Tour_guide_included",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "passengers",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "breakfast",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "lunch",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "dinner",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "go",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "back",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "count_days",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addService",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tour gide",
+			"item": [
+				{
+					"name": "gide_type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/gide_type",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"gide_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "languages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/languages",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addTravel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "385|6VZnXp3agub2z7LFyZkhw2s2asxrdIWvJvqdEfeN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "travel_type_id",
+									"value": "pmw",
+									"type": "text"
+								},
+								{
+									"key": "language_id",
+									"value": "english",
+									"type": "text"
+								},
+								{
+									"key": "license_number",
+									"value": "11111111111",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ddddddddddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "iban",
+									"value": "58252752",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "terms[]",
+									"value": "hjjretrsh",
+									"type": "text"
+								},
+								{
+									"key": "national_image",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "license_image",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "category_id",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "hour_price",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "guide_image",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1682941952_logo.png"
+								},
+								{
+									"key": "passengers",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "moodle",
+									"value": "pmw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addService",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "event_type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/event_type",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"event_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addTravel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "148|TGpICTiPFAr02OlVSEbRCkX9a0XA8cJ4pMvW7ro0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "travel_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "from",
+									"value": "2023-6-1",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "2023-6-3",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ddddddddddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "iban",
+									"value": "58252752",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "terms[]",
+									"value": "hjjretrsh",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "hour_work",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "ticket_count",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addService",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "markiting",
+			"item": [
+				{
+					"name": "markiting_type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://visooft-code.com/api/markiting_type",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"markiting_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addTravel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "148|TGpICTiPFAr02OlVSEbRCkX9a0XA8cJ4pMvW7ro0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "lang",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "travel_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "travel",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ddddddddddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/dell/Desktop/1684230981_category.png"
+								},
+								{
+									"key": "terms[]",
+									"value": "hjjretrsh",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "2.22222222",
+									"type": "text"
+								},
+								{
+									"key": "long",
+									"value": "2.22222222",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "dddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://visooft-code.com/api/addService",
+							"protocol": "https",
+							"host": [
+								"visooft-code",
+								"com"
+							],
+							"path": [
+								"api",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

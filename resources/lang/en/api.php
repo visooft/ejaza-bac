@@ -1,0 +1,38 @@
+<?php
+
+
+return [
+    'successMessage' => 'The data has been recovered successfully',
+    'errorMessage' => 'An error occurred, please contact support',
+    'verifyAccount' => 'Please activate the account first',
+    'notAllow' => 'You are not authorized to enter',
+    'successLogin' => 'Logged in successfully',
+    'notConfirm' => 'password does not match',
+    'invalidOtp' => 'The verification code is incorrect',
+    'resendOtp' => 'Your verification code has been sent',
+    'changePassword' => 'Password changed successfully',
+    'logout' => 'Successfully logged out',
+    'deleteAccount' => 'Account deleted successfully',
+    'addSuccess' => 'Your ad has been added and will be reviewed by the administration for approval',
+    'addUserDetials' => 'Data added successfully',
+    'updateProfile' => 'Data updated successfully',
+    'wrongpassword' => 'The current password is incorrect',
+    'updatePassword' => 'Password changed successfully',
+    'addFavorite' => 'Add this ad to favourites',
+    'deleteFavourite' => 'This ad has been removed from your favourites',
+    'wrongWheel' => 'Wrong Wheel can only be used once per day',
+    'addPointUser' => 'Points added to your points',
+    'addWalletUser' => 'The balance has been added to the wallet',
+    'successOrder' => 'Reservation completed successfully',
+    'pendingStatus' => 'pending hold',
+    'accepetStatus' => 'accepted reservation',
+    'rejectStatus' => 'Rejected reservation',
+    'cancelStatus' => 'Canceled reservation',
+    'deleteSuccess' => 'The ad was deleted successfully',
+    'found' => 'found',
+    'nofound' => 'no',
+    'notEnugth' => 'The balance in the wallet is not enough, please recharge first',
+    'cash' => 'cash',
+    'online' => 'online',
+    'wallet' => 'wallet'
+];
