@@ -30,13 +30,15 @@ class CountryController extends Controller
             'name_en' => 'required|string|min:3|max:200',
             'name_tr' => 'required|string|min:3|max:200',
             'currency' => 'required|string|min:3|max:200',
+            'code' => 'required|string|min:3|max:200|unique:countries,code',
         ]);
 
         $this->countryModel::create([
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'name_tr' => $request->name_tr,
-            'currency' => $request->currency
+            'currency' => $request->currency,
+            'code' => $request->code,
         ]);
 
         return back()->with('done', 'تم اضافة الدولة بنجاح');
@@ -49,6 +51,7 @@ class CountryController extends Controller
             'name_tr' => 'required|string|min:3|max:200',
             'cityId' => 'required|exists:countries,id',
             'currency' => 'required|string|min:3|max:200',
+            'code' => 'required|string|min:3|max:200|unique:countries,code,' . $request->cityId . ',id',
         ]);
         $city = $this->getCountryById($request->cityId);
 
@@ -56,7 +59,8 @@ class CountryController extends Controller
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'name_tr' => $request->name_tr,
-            'currency' => $request->currency
+            'currency' => $request->currency,
+            'code' => $request->code,
         ]);
 
         return back()->with('done', 'تم تحديث الدولة بنجاح');

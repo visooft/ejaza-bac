@@ -57,6 +57,7 @@
                                             <th>{{ __('dashboard.#') }}</th>
                                             <th>{{ __('dashboard.name') }}</th>
                                             <th>العملة</th>
+                                            <th>الكود</th>
                                             @can('superAdmin')
                                                 <th style="min-width: 100px">{{ __('dashboard.action') }}</th>
                                             @endcan
@@ -69,6 +70,9 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td><a href="{{ route('cities', $country->id) }}">{{ $country->name }}</a></td>
                                                 <td>{{ $country->currency }}
+                                                </td>
+                                                <td>
+                                                    {{ $country->code }}
                                                 </td>
                                                 @can('superAdmin')
                                                     <td>
