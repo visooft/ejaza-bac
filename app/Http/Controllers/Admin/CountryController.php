@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\countryTrait;
+use App\Http\Traits\ImagesTrait;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
     use countryTrait;
+    use ImagesTrait;
+
     private $countryModel;
+
     public function __construct(Country $country)
     {
         $this->countryModel = $country;
@@ -31,18 +35,24 @@ class CountryController extends Controller
             'name_tr' => 'required|string|min:3|max:200',
             'currency' => 'required|string|min:3|max:200',
             'code' => 'required|string|min:3|max:200|unique:countries,code',
+            'flag' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $fileName = time() . '.' . $request->flag->extension();
+        $this->uploadImage($request->flag, $fileName, 'countries');
         $this->countryModel::create([
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'name_tr' => $request->name_tr,
             'currency' => $request->currency,
             'code' => $request->code,
+            'flag' => $fileName,
         ]);
+
 
         return back()->with('done', 'تم اضافة الدولة بنجاح');
     }
+
     public function update(Request $request)
     {
         $request->validate([
@@ -52,9 +62,18 @@ class CountryController extends Controller
             'cityId' => 'required|exists:countries,id',
             'currency' => 'required|string|min:3|max:200',
             'code' => 'required|string|min:3|max:200|unique:countries,code,' . $request->cityId . ',id',
+            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $city = $this->getCountryById($request->cityId);
 
+        if ($request->hasFile('flag')) {
+            $fileName = time() . '.' . $request->flag->extension();
+            $oldpath = 'Admin/images/countries/' . $city->flag;
+            $this->uploadImage($request->flag, $fileName, 'countries', $oldpath);
+            $city->update([
+                'flag' => $fileName,
+            ]);
+        }
         $city->update([
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
@@ -88,6 +107,7 @@ class CountryController extends Controller
         ]);
         return back()->with('done', 'تم اخفاء الدولة بنجاح');
     }
+
     public function showCountry(Request $request)
     {
         $request->validate([

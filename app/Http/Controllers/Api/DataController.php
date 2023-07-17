@@ -43,10 +43,11 @@ class DataController extends Controller
         $this->appModel::setLocale($lang);
         try {
             $data = [];
-            $countries = $this->countryModel::where('status', 1)->get(['id', 'name_ar', 'name_en', 'name_tr','code']);
+            $countries = $this->countryModel::where('status', 1)->get(['id', 'name_ar', 'name_en', 'name_tr','code','flag']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
                 $data[$key]["code"] = $country->code;
+                $data[$key]["flag"] = env('APP_URL') . 'Admin/images/country/' . $country->flag;
                 if ($request->header('lang') == "en") {
                     $data[$key]["name"] = $country->name_en;
                 } elseif ($request->header('lang') == "tr") {
