@@ -44,7 +44,6 @@ Route::group(['middleware' => ['api']], function () {
                 Route::get('/getAdsByCategory', [HomeScreenController::class, 'getAdsByCategory']);
                 Route::post('/filter', [HomeScreenController::class, 'filter']);
                 Route::get('/getRelatedAds', [HomeScreenController::class, 'getRelatedAds']);
-                Route::get('/getCities', [HomeScreenController::class, 'getCitiesData']);
                 Route::get('/getStreets', [HomeScreenController::class, 'getStreetsData']);
                 Route::get('/getStreet', [HomeScreenController::class, 'getStreet']);
                 Route::get('/checkUserDetials', [HomeScreenController::class, 'checkUserDetials']);
@@ -84,5 +83,7 @@ Route::group(['middleware' => ['api']], function () {
         Route::post('/forgetPassword', [AuthController::class, 'forgetPassword']);
         Route::post('/changePassword', [AuthController::class, 'changePassword']);
         Route::get('/splach', [HomeScreenController::class, 'splach']);
+        Route::get('/getCities', [HomeScreenController::class, 'getCitiesData']);
+
     }
 });
