@@ -118,7 +118,7 @@ class HomeScreenController extends Controller
                 $home_text = $title->value;
                 $desc_text = $desc->value;
             }
-            
+
             return $this->returnData('data', ["sliders" => $sliders, "Adspace" => $spaceSlider ,"categories" => $categories, "cities" => $cities, "countNotification" => $countNotification, "home_text" => $home_text, "desc_text" => $desc_text], __('api.successMessage'));
         } catch (\Throwable $th) {
             return $this->returnError(403, $th->getMessage());
@@ -137,7 +137,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $th->getMessage());
         }
     }
-    
+
     public function tourGuide(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -251,7 +251,7 @@ class HomeScreenController extends Controller
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
-            
+
             if($request->images)
             {
                 $imageData = [];
@@ -260,12 +260,12 @@ class HomeScreenController extends Controller
                     $this->uploadImage($image, $imageName, 'ads');
                     array_push($imageData, $imageName);
                 }
-                
+
             }
-            
+
             $tr = new GoogleTranslate('tr');
             $en = new GoogleTranslate('en');
-            
+
             if ($request->national_image) {
                 $national_image = random_int(11111111, 999999999) . '_ads.' . $request->national_image->extension();
                 $this->uploadImage($request->national_image, $national_image, 'ads');
@@ -346,7 +346,7 @@ class HomeScreenController extends Controller
                 'lat' => $request->lat,
                 'long' => $request->long,
                 'city_id' => $request->city_id,
-                'country_id' => $request->user()->country_id,
+                'country_id' => $request->country_id,  // 👈 I change this @comment 1
                 'street_id' => $request->street_id,
                 'user_id' => $request->user()->id,
                 'category_id' => $request->category_id,
@@ -453,7 +453,7 @@ class HomeScreenController extends Controller
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $cities = $this->getCities($request->user()->country_id);
+            $cities = $this->getCities($request->country_id);
             return $this->returnData('data', ["cities" => $cities], __('api.successMessage'));
         } catch (\Throwable $th) {
             return $this->returnError(403, __('api.errorMessage'));
@@ -470,7 +470,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
-    
+
     public function getStreet(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -689,7 +689,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $th->getMessage());
         }
     }
-    
+
     public function addWallet(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -705,7 +705,7 @@ class HomeScreenController extends Controller
             }
             $user = User::find($request->user()->id);
             $user->update(['wallet' => $user->wallet + $request->value]);
-            
+
             Wallet::create([
                 'desc_ar' => 'تم اضافة ' . $request->value . ' ريال سعودي الي المحفظة الخاصة بك    ',
                 'desc_en' => ' has been added ' . $request->value . ' SAR to your wallet',
@@ -713,7 +713,7 @@ class HomeScreenController extends Controller
                 'user_id' => $request->user()->id
             ]);
             return $this->returnSuccess(200, __('api.addWalletUser'));
-            
+
         } catch (\Throwable $th) {
             return $this->returnError(403, $th->getMessage());
         }
@@ -893,7 +893,7 @@ class HomeScreenController extends Controller
                         array_push($ads, $ad);
                     }
                 }
-            } 
+            }
             elseif ($request->travel_type) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
@@ -902,7 +902,7 @@ class HomeScreenController extends Controller
                         array_push($ads, $ad);
                     }
                 }
-            } 
+            }
             elseif ($request->chalets) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
@@ -911,7 +911,7 @@ class HomeScreenController extends Controller
                         array_push($ads, $ad);
                     }
                 }
-            } 
+            }
             elseif ($request->camp) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
@@ -920,7 +920,7 @@ class HomeScreenController extends Controller
                         array_push($ads, $ad);
                     }
                 }
-            } 
+            }
             elseif ($request->word) {
                 $ads = $this->getAdsSearch($request->category_id, $request->user()->id, $request->word);
             } else {
