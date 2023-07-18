@@ -19,16 +19,6 @@ trait ApiCityTraits
         $cityData = [];
         $cities = $this->cityModel::where('country_id', $id)->get();
         $key = 1;
-        if (app()->getLocale() == "tr") {
-            $cityData[0]['id'] = "all";
-            $cityData[0]['title'] = $tr->translate("all");
-        } elseif (app()->getLocale() == "en") {
-            $cityData[0]['id'] = "all";
-            $cityData[0]['title'] = $ne->translate("all");
-        } else {
-            $cityData[0]['id'] = "all";
-            $cityData[0]['title'] = "الكل";
-        }
         $cityData[0]['image'] = "";
         foreach ($cities as $city) {
             if (app()->getLocale() == "tr") {
