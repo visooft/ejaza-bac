@@ -20,7 +20,7 @@ trait ApiAdsTraits
         $tr = new GoogleTranslate('tr');
         $en = new GoogleTranslate('en');
         foreach ($categories as $category) {
-            if ($category->id == 9 || $category->id == 3 || $category->id == 4 || $category->id == 5 || $category->id == 6) {
+            if ($category->id == 9 || $category->id == 3 || $category->id == 4 || $category->id == 5 || $category->id == 6 || $category->id == 7) {
                 if ($request->city_id) {
                     if ($request->city_id == "all") {
                         $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
