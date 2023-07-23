@@ -592,13 +592,13 @@ class AuthController extends Controller
                 $price = $house->price - ($house->price * $offer->offer / 100);
                 $totalPrice = $price * $request->count;
             } else {
-                $setting = Setting::get(['key','value']);
+                $setting = Setting::all();
                 $addition_value = 0;
                 foreach ($setting as $settin)
                 {
                     if ($settin == 'addition_value')
                     {
-                        $addition_value + $settin->value;
+                        $addition_value = $settin->value;
                     }
                 }
                 $totalPrice = $house->price * $request->count * $house->passengers + $addition_value;
