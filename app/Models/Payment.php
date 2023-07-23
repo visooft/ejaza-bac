@@ -23,4 +23,9 @@ class Payment extends Model
         'status' => 'boolean',
         'type' => 'string',
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

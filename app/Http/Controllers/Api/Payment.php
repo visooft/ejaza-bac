@@ -11,6 +11,9 @@ class Payment extends Controller
     {
         try {
             $pay = PaymentModel::all();
+            foreach ($pay as $p) {
+                $p->image = asset($p->image);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'تم جلب البيانات بنجاح',
