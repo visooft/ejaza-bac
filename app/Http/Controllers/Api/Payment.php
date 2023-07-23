@@ -7,17 +7,24 @@ use App\Models\Payment as PaymentModel;
 
 class Payment extends Controller
 {
+    public $images = array();
     public function index()
     {
         try {
-            $pay = PaymentModel::all();
+            $pay = PaymentModel::where('status', 1)->get();
+
             foreach ($pay as $p) {
-                $p->image = asset($p->image);
+                $images = array();
+                foreach ($p->image as $image) {
+                    $images[] = asset($image);
+                }
+                $p->image = $images;
             }
+
             return response()->json([
                 'status' => true,
                 'message' => 'تم جلب البيانات بنجاح',
-                'data' => $pay
+                'data' => $pay,
             ]);
         } catch (\Exception $e) {
             return response()->json([
