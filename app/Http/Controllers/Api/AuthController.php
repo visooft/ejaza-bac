@@ -554,6 +554,7 @@ class AuthController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+    public $addition_value;
     public function order(Request $request)
     {
         // require_once env('APP_URL').'en/autoload.php';
@@ -593,15 +594,13 @@ class AuthController extends Controller
                 $totalPrice = $price * $request->count;
             } else {
                 $setting = Setting::all();
-                $addition_value = 0;
                 foreach ($setting as $settin)
                 {
-                    if ($settin == 'addition_value')
-                    {
-                        $addition_value = $settin->value;
+                    if ($settin->key == "addition_value") {
+                        $this->addition_value = $settin->value;
                     }
                 }
-                $totalPrice = $house->price * $request->count * $house->passengers + $addition_value;
+                $totalPrice = $house->price * $request->count * $house->passengers + $this->addition_value;
             }
             if ($request->coupon) {
                 $coupon = Coupon::where('coupon', $request->coupon)->first();
