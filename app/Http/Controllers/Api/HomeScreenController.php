@@ -13,7 +13,6 @@ use App\Http\Traits\ImagesTrait;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Comments;
-use App\Models\Date;
 use App\Models\Favourites;
 use App\Models\HouseDetials;
 use App\Models\HouseTerms;
@@ -223,7 +222,7 @@ class HomeScreenController extends Controller
                 'images' => 'nullable|array',
                 'accompanying' => 'nullable|array',
                 'terms' => 'nullable|array',
-                'travel_type_id' => 'nullable',
+                'travel_type_id' => 'nullable|exists:travel_types,id',
                 'language_id' => 'nullable|string',
                 'travel_country_id' => 'nullable|exists:travel_countries,id',
                 'group_travel' => 'nullable|numeric',
