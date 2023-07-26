@@ -600,7 +600,7 @@ class AuthController extends Controller
                         $this->addition_value = $settin->value;
                     }
                 }
-                $totalPrice = $house->price * $request->count * $house->passengers + $this->addition_value;
+                $totalPrice = $house->price * $request->count + $this->addition_value;
             }
             if ($request->coupon) {
                 $coupon = Coupon::where('coupon', $request->coupon)->first();
