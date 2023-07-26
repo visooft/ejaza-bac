@@ -150,7 +150,14 @@ trait ApiAdsTraits
                     }
                     $data[$key]["id"] = $ad->id;
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                    ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                    if ($ad->street_id) {
+                        $data[$key]["street_id"] = $ad->street_id;
+                        $data[$key]["street_name"] = $ad->street->name_ar;
+                    } else {
+                        $data[$key]["street_id"] = "";
+                        $data[$key]["street_name"] = "";
+                    }
+
                     ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                     $data[$key]["categoryName"] = $category->name;
                     $data[$key]["category_id"] = $category->id;
@@ -205,7 +212,6 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -374,7 +380,14 @@ trait ApiAdsTraits
                     }
                     $data[$key]["id"] = $ad->id;
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                    ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                    if ($ad->street_id) {
+                        $data[$key]["street_id"] = $ad->street_id;
+                        $data[$key]["street_name"] = $ad->street->name_ar;
+                    } else {
+                        $data[$key]["street_id"] = "";
+                        $data[$key]["street_name"] = "";
+                    }
+
                     ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                     $data[$key]["categoryName"] = $category->name;
                     $data[$key]["category_id"] = $category->id;
@@ -429,7 +442,6 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -594,7 +606,14 @@ trait ApiAdsTraits
                     }
                     $data[$key]["id"] = $ad->id;
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                    ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                    if ($ad->street_id) {
+                        $data[$key]["street_id"] = $ad->street_id;
+                        $data[$key]["street_name"] = $ad->street->name_ar;
+                    } else {
+                        $data[$key]["street_id"] = "";
+                        $data[$key]["street_name"] = "";
+                    }
+
                     ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                     $data[$key]["categoryName"] = $category->name;
                     $data[$key]["category_id"] = $category->id;
@@ -649,7 +668,6 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -845,7 +863,14 @@ trait ApiAdsTraits
                 }
                 $data[$key]["id"] = $ad->id;
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                if ($ad->street_id) {
+                    $data[$key]["street_id"] = $ad->street_id;
+                    $data[$key]["street_name"] = $ad->street->name_ar;
+                } else {
+                    $data[$key]["street_id"] = "";
+                    $data[$key]["street_name"] = "";
+                }
+
                 ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                 $data[$key]["categoryName"] = $category->name;
                 $data[$key]["category_id"] = $category->id;
@@ -903,7 +928,6 @@ trait ApiAdsTraits
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
@@ -1071,7 +1095,14 @@ trait ApiAdsTraits
                 }
                 $data[$key]["id"] = $ad->id;
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                if ($ad->street_id) {
+                    $data[$key]["street_id"] = $ad->street_id;
+                    $data[$key]["street_name"] = $ad->street->name_ar;
+                } else {
+                    $data[$key]["street_id"] = "";
+                    $data[$key]["street_name"] = "";
+                }
+
                 ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                 $data[$key]["categoryName"] = $category->name;
                 $data[$key]["category_id"] = $category->id;
@@ -1126,7 +1157,6 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -1291,7 +1321,13 @@ trait ApiAdsTraits
                 }
                 $data[$key]["id"] = $ad->id;
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                if ($ad->street_id) {
+                    $data[$key]["street_id"] = $ad->street_id;
+                    $data[$key]["street_name"] = $ad->street->name_ar;
+                } else {
+                    $data[$key]["street_id"] = "";
+                    $data[$key]["street_name"] = "";
+                }
                 ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                 $data[$key]["payment_type"] = __('api.' . $order->payment_type);
                 if ($order->payment_type == "cash") {
@@ -1354,7 +1390,6 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -1529,7 +1564,14 @@ trait ApiAdsTraits
                 }
                 $data[$key]["id"] = $ad->id;
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
-                ($ad->street_id) ? $data[$key]["street_id"] = $ad->street_id : $data[$key]["street_id"] = "";
+                if ($ad->street_id) {
+                    $data[$key]["street_id"] = $ad->street_id;
+                    $data[$key]["street_name"] = $ad->street->name_ar;
+                } else {
+                    $data[$key]["street_id"] = "";
+                    $data[$key]["street_name"] = "";
+                }
+
                 ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                 $data[$key]["categoryName"] = $category->name;
                 $data[$key]["category_id"] = $category->id;
@@ -1584,7 +1626,6 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
