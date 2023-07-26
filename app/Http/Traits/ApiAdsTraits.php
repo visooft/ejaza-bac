@@ -700,19 +700,17 @@ trait ApiAdsTraits
         foreach ($adsData as $key => $ad) {
             if ($ad) {
                 $category = $this->categoryModel::find($ad->category_id);
-                $type = travelType::find($ad->travel_type_id);
+//                $type = travelType::find($ad->travel_type_id);
                 $country = travelCountry::find($ad->travel_country_id);
                 if (app()->getLocale() == "en") {
                     ($ad->language_id) ? $data[$key]["language"] = $en->translate($ad->language_id) : $data[$key]["language"] = "";
-                    ($type) ? $data[$key]["travel_type"] = $type->name_en : $data[$key]["travel_type"] = "";
+//                    ($type) ? $data[$key]["travel_type"] = $type->name_en : $data[$key]["travel_type"] = "";
                     ($country) ? $data[$key]["country"] = $country->name_en : $data[$key]["country"] = "";
                     $category->name = $category->name_en;
                     if ($category->id == 7) {
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_en;
                     } else {
                         $ad->name = $ad->name_en;
                     }
@@ -724,13 +722,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_tr;
                     } else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
-                    ($type) ? $data[$key]["travel_type"] = $type->name_tr : $data[$key]["travel_type"] = "";
+//                    ($type) ? $data[$key]["travel_type"] = $type->name_tr : $data[$key]["travel_type"] = "";
                     ($country) ? $data[$key]["country"] = $country->name_tr : $data[$key]["country"] = "";
                     $ad->desc = $ad->desc_tr;
                     ($ad->city_id) ? $ad->cityName = $ad->city->name_tr : $ad->cityName = "";
@@ -740,12 +736,10 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_ar;
                     } else {
                         $ad->name = $ad->name_ar;
                     }
-                    ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
+//                    ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
                     ($ad->language_id) ? $data[$key]["language"] = $ad->language_id : $data[$key]["language"] = "";
                     ($country) ? $data[$key]["country"] = $country->name_ar : $data[$key]["country"] = "";
                     $ad->desc = $ad->desc_ar;
