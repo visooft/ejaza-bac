@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\Models\Offers;
 use App\Models\Setting;
 use App\Models\Accompanying;
+use App\Models\Streets;
 use App\Models\travelType;
 use App\Models\travelCountry;
 use Stichoza\GoogleTranslate\GoogleTranslate;
@@ -204,6 +205,8 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -426,6 +429,8 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -644,6 +649,8 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -896,6 +903,8 @@ trait ApiAdsTraits
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -1117,6 +1126,8 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1343,6 +1354,8 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1571,6 +1584,8 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["street_name"] = Streets::find($ad->street_id)->name_ar;
+
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
