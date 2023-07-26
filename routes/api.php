@@ -87,5 +87,6 @@ Route::group(['middleware' => ['api']], function () {
         Route::get('/date', [HomeScreenController::class, 'date']);
         Route::get('/payment', [\App\Http\Controllers\Api\Payment::class, 'index']);
         Route::post('/payment', [\App\Http\Controllers\Api\Payment::class, 'post']);
+
     }
 });
