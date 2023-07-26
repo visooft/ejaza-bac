@@ -12,12 +12,12 @@ trait ApiCityTraits
         return $this->cityModel::find($cityId);
     }
 
-    private function getCities()
+    private function getCities($id)
     {
         $tr = new GoogleTranslate('tr');
         $en = new GoogleTranslate('en');
         $cityData = [];
-        $cities = $this->cityModel::all();
+        $cities = $this->cityModel::where('country_id', $id)->get();
         $key = 1;
         if (app()->getLocale() == "tr") {
             $cityData[0]['id'] = "all";

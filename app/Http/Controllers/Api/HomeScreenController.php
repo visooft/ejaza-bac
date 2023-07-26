@@ -449,12 +449,12 @@ class HomeScreenController extends Controller
         }
     }
 
-    public function getCitiesData(Request $request, $id)
+    public function getCitiesData(Request $request)
     {
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $cities = $this->getCities($id);
+            $cities = $this->getCities($request->user()->country_id);
             return $this->returnData('data', ["cities" => $cities], __('api.successMessage'));
         } catch (\Throwable $th) {
             return $this->returnError(403, __('api.errorMessage'));
