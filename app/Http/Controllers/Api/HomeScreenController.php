@@ -466,7 +466,7 @@ class HomeScreenController extends Controller
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $street = Streets::find($request->street_id)->first(['lat', 'long']);
+            $street = Streets::where('id', $request->street_id)->first(['lat', 'long']);
             return $this->returnData('data', ["street" => $street], __('api.successMessage'));
         } catch (\Throwable $th) {
             return $this->returnError(403, __('api.errorMessage'));
@@ -986,7 +986,6 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
-
 
     public function date()
     {
