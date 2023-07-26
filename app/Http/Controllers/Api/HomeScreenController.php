@@ -223,7 +223,7 @@ class HomeScreenController extends Controller
                 'images' => 'nullable|array',
                 'accompanying' => 'nullable|array',
                 'terms' => 'nullable|array',
-                'travel_type_id' => 'nullable|exists:travel_types,id',
+                'travel_type_id' => 'nullable',
                 'language_id' => 'nullable|string',
                 'travel_country_id' => 'nullable|exists:travel_countries,id',
                 'group_travel' => 'nullable|numeric',
