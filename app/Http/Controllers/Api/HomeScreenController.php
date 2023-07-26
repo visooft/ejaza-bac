@@ -223,6 +223,7 @@ class HomeScreenController extends Controller
                 'accompanying' => 'nullable|array',
                 'terms' => 'nullable|array',
                 'travel_type_id' => 'nullable|exists:travel_types,id',
+                'travel_name' => 'nullable|string',
                 'language_id' => 'nullable|string',
                 'travel_country_id' => 'nullable|exists:travel_countries,id',
                 'group_travel' => 'nullable|numeric',
@@ -297,6 +298,15 @@ class HomeScreenController extends Controller
                 $event_name_en = null;
                 $event_name_tr = null;
             }
+            if ($request->travel_name) {
+                $travel_name_en = $en->translate($request->travel_name);
+                $travel_name_tr = $tr->translate($request->travel_name);
+                $travel_name = $request->travel_name;
+            } else {
+                $travel_name_en = null;
+                $travel_name_tr = null;
+                $travel_name = null;
+            }
             if ($request->title) {
                 $name_en = $en->translate($request->title);
                 $name_tr = $tr->translate($request->title);
@@ -362,7 +372,10 @@ class HomeScreenController extends Controller
                 'back' => $back,
                 'passengers' => $request->passengers,
                 'moodle' => $request->moodle,
-                'count_days' => $count_days
+                'count_days' => $count_days,
+                'travel_name' => $travel_name,
+                'travel_name_en' => $travel_name_en,
+                'travel_name_tr' => $travel_name_tr,
             ]);
             foreach ($imageData as $image) {
                 $this->imageModel::create([

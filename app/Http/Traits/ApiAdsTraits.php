@@ -868,6 +868,7 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
+                $data[$key]["travel_name"] = $ad->travel_name;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
