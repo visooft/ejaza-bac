@@ -705,4 +705,31 @@ class AuthController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
+
+    public function changeCounry(Request $request)
+    {
+        $lang = $this->returnLang($request);
+        $this->appModel::setLocale($lang);
+        try {
+            $rules = [
+                'country_id' => 'required|exists:countries,id'
+            ];
+            $validator = $this->validateModel::make($request->all(), $rules);
+            if ($validator->fails()) {
+                $code = $this->returnCodeAccordingToInput($validator);
+                return $this->returnValidationError($code, $validator);
+            }
+            $country = Country::find($request->country_id);
+            if (!$country) {
+                return $this->returnError(403, 'هذا البلد غير موجود');
+            } else {
+                $request->user()->update([
+                    'country_id' => $request->country_id
+                ]);
+            }
+            return $this->returnData('data', null, 'تم تغيير البلد بنجاح');
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
+        }
+    }
 }

@@ -40,11 +40,12 @@ Route::group(['middleware' => ['api']], function () {
                 Route::post('/updatePassword', [AuthController::class, 'updatePassword']);
                 Route::get('/homeScreen', [HomeScreenController::class, 'homeScreen']);
                 Route::get('/getAds', [HomeScreenController::class, 'getAds']);
+                Route::get('/changeCountry', [AuthController::class, 'changeCounry']);
                 Route::get('/getAdsByCity', [HomeScreenController::class, 'getAdsByCity']);
                 Route::get('/getAdsByCategory', [HomeScreenController::class, 'getAdsByCategory']);
                 Route::post('/filter', [HomeScreenController::class, 'filter']);
                 Route::get('/getRelatedAds', [HomeScreenController::class, 'getRelatedAds']);
-                Route::get('/getCities/{id}', [HomeScreenController::class, 'getCitiesData']);
+                Route::get('/getCities', [HomeScreenController::class, 'getCitiesData']);
                 Route::get('/getStreets', [HomeScreenController::class, 'getStreetsData']);
                 Route::get('/getStreet', [HomeScreenController::class, 'getStreet']);
                 Route::get('/checkUserDetials', [HomeScreenController::class, 'checkUserDetials']);
