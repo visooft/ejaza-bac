@@ -43,9 +43,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_en;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_en;
+//                        }
+                        else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -56,9 +58,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_tr;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_tr;
+//                        }
+                        else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -72,9 +76,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_ar;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_ar;
+//                        }
+                        else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -197,6 +203,7 @@ trait ApiAdsTraits
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
+                    $data[$key]["travel_name"] = $ad->travel_name;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -258,9 +265,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_en;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_en;
+//                        }
+                        else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -271,9 +280,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_tr;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_tr;
+//                        }
+                        else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -287,9 +298,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_ar;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_ar;
+//                        }
+                        else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -412,6 +425,7 @@ trait ApiAdsTraits
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
+                    $data[$key]["travel_name"] = $ad->travel_name;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -469,9 +483,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_en;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_en;
+//                        }
+                        else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -482,9 +498,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_tr;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_tr;
+//                        }
+                        else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -498,9 +516,11 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        } elseif ($category->id == 8) {
-                            $ad->name = $type->name_ar;
-                        } else {
+                        }
+//                        elseif ($category->id == 8) {
+//                            $ad->name = $type->name_ar;
+//                        }
+                        else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -623,6 +643,7 @@ trait ApiAdsTraits
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
+                    $data[$key]["travel_name"] = $ad->travel_name;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -936,9 +957,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_en;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_en;
+//                    }
+                    else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -949,9 +972,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_tr;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_tr;
+//                    }
+                    else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -965,9 +990,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_ar;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_ar;
+//                    }
+                    else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -1089,6 +1116,7 @@ trait ApiAdsTraits
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
+                $data[$key]["travel_name"] = $ad->travel_name;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1146,9 +1174,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_en;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_en;
+//                    }
+                    else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -1159,9 +1189,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_tr;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_tr;
+//                    }
+                    else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -1175,9 +1207,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_ar;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_ar;
+//                    }
+                    else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -1308,6 +1342,7 @@ trait ApiAdsTraits
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
+                $data[$key]["travel_name"] = $ad->travel_name;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1375,9 +1410,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_en;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_en;
+//                    }
+                    else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -1388,9 +1425,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_tr;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_tr;
+//                    }
+                    else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -1404,9 +1443,11 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    } elseif ($category->id == 8) {
-                        $ad->name = $type->name_ar;
-                    } else {
+                    }
+//                    elseif ($category->id == 8) {
+//                        $ad->name = $type->name_ar;
+//                    }
+                    else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -1529,6 +1570,7 @@ trait ApiAdsTraits
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
+                $data[$key]["travel_name"] = $ad->travel_name;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
