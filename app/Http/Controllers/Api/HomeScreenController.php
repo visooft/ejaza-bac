@@ -13,6 +13,7 @@ use App\Http\Traits\ImagesTrait;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Comments;
+use App\Models\Date;
 use App\Models\Favourites;
 use App\Models\HouseDetials;
 use App\Models\HouseTerms;
@@ -47,7 +48,9 @@ use Illuminate\Support\Facades\Validator;
 class HomeScreenController extends Controller
 {
     use GeneralTrait, getLang, ApiSliderTraits, ApiCategoryTrait, ApiCityTraits, ImagesTrait, ApiAdsTraits;
+
     private $appModel, $sliderModel, $categoryModel, $spaceModel, $cityModel, $validateModel, $detialModel, $termModel, $houseModel, $imageModel, $streetModel, $userDetiaslModel, $carbonModel, $commenetModel, $favouriteModel, $wheelModel, $TravelTermsModel, $travelImageModel, $travelModel, $travelCountryModel, $travelTypeModel;
+
     public function __construct(App $app, Sliders $slider, Category $category, City $city, Validator $validate, Housing $house, HouseTerms $term, HouseDetials $detials, Images $image, Streets $street, userDetials $userDetiasl, Carbon $carbon, Comments $commenet, Favourites $favourite, WheelOfFortune $wheel, travelType $travelType, travelCountry $travelCountry, Travel $travel, TravelImages $travelImage, TravelTerms $TravelTerms, Adspace $space, Splach $splach)
     {
         $this->appModel = $app;
@@ -73,6 +76,7 @@ class HomeScreenController extends Controller
         $this->travelTypeModel = $travelType;
         $this->splachModel = $splach;
     }
+
     public function homeScreen(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -103,23 +107,18 @@ class HomeScreenController extends Controller
             $desc = Setting::where('key', 'desc')->first();
             $tr = new GoogleTranslate('tr');
             $en = new GoogleTranslate('en');
-            if(app()->getLocale() == "en")
-            {
+            if (app()->getLocale() == "en") {
                 $home_text = $en->translate($title->value);
                 $desc_text = $en->translate($desc->value);
-            }
-            elseif(app()->getLocale() == "tr")
-            {
+            } elseif (app()->getLocale() == "tr") {
                 $home_text = $tr->translate($title->value);
                 $desc_text = $tr->translate($desc->value);
-            }
-            else
-            {
+            } else {
                 $home_text = $title->value;
                 $desc_text = $desc->value;
             }
 
-            return $this->returnData('data', ["sliders" => $sliders, "Adspace" => $spaceSlider ,"categories" => $categories, "cities" => $cities, "countNotification" => $countNotification, "home_text" => $home_text, "desc_text" => $desc_text], __('api.successMessage'));
+            return $this->returnData('data', ["sliders" => $sliders, "Adspace" => $spaceSlider, "categories" => $categories, "cities" => $cities, "countNotification" => $countNotification, "home_text" => $home_text, "desc_text" => $desc_text], __('api.successMessage'));
         } catch (\Throwable $th) {
             return $this->returnError(403, $th->getMessage());
         }
@@ -149,6 +148,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $th->getMessage());
         }
     }
+
     public function splach(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -252,8 +252,7 @@ class HomeScreenController extends Controller
                 return $this->returnValidationError($code, $validator);
             }
 
-            if($request->images)
-            {
+            if ($request->images) {
                 $imageData = [];
                 foreach ($request->images as $image) {
                     $imageName = random_int(11111111, 999999999) . '_ads.' . $image->extension();
@@ -285,49 +284,38 @@ class HomeScreenController extends Controller
                 $guide_image = null;
             }
 
-            if($request->car_name)
-            {
+            if ($request->car_name) {
                 $car_type_en = $en->translate($request->car_name);
                 $car_type_tr = $tr->translate($request->car_name);
-            }
-            else
-            {
+            } else {
                 $car_type_en = null;
                 $car_type_tr = null;
             }
-            if($request->event_name)
-            {
+            if ($request->event_name) {
                 $event_name_en = $en->translate($request->event_name);
                 $event_name_tr = $tr->translate($request->event_name);
-            }
-            else
-            {
+            } else {
                 $event_name_en = null;
                 $event_name_tr = null;
             }
-            if($request->title)
-            {
+            if ($request->title) {
                 $name_en = $en->translate($request->title);
                 $name_tr = $tr->translate($request->title);
                 $name = $request->title;
-            }
-            elseif($request->name)
-            {
+            } elseif ($request->name) {
                 $name_en = $en->translate($request->name);
                 $name_tr = $tr->translate($request->name);
                 $name = $request->name;
-            }
-            else
-            {
+            } else {
                 $name_en = null;
                 $name_tr = null;
                 $name = null;
             }
-            ($request->price) ? $price = $request->price: $price = 0;
-            ($request->camp) ? $camp = $request->camp: $camp = 0;
-            ($request->chalets) ? $chalets = $request->chalets: $chalets = 0;
+            ($request->price) ? $price = $request->price : $price = 0;
+            ($request->camp) ? $camp = $request->camp : $camp = 0;
+            ($request->chalets) ? $chalets = $request->chalets : $chalets = 0;
             ($request->hour_work) ? $hour_work = $request->hour_work : $hour_work = 0;
-            ($request->ticket_count) ? $ticket_count = $request->ticket_count: $ticket_count = 0;
+            ($request->ticket_count) ? $ticket_count = $request->ticket_count : $ticket_count = 0;
             ($request->hour_price) ? $hour_price = $request->hour_price : $hour_price = 0;
             ($request->group_travel) ? $group = $request->group_travel : $group = 0;
             ($request->indivdual_travel) ? $indivdual_travel = $request->group_travel : $indivdual_travel = 0;
@@ -383,7 +371,7 @@ class HomeScreenController extends Controller
                     'housings_id' => $house->id
                 ]);
             }
-            if($request->accompanying){
+            if ($request->accompanying) {
                 foreach ($request->accompanying as $accompanying) {
                     Accompanying::create([
                         'travel_id' => $accompanying,
@@ -391,24 +379,24 @@ class HomeScreenController extends Controller
                     ]);
                 }
             }
-            ($request->insurance) ? $insurance = $request->insurance: $insurance = 0;
-            ($request->families) ? $families = $request->families: $families = 0;
-            ($request->animals) ? $animals = $request->animals: $animals = 0;
-            ($request->visits) ? $visits = $request->visits: $visits = 0;
-            ($request->bed_room) ? $bed_room = $request->bed_room: $bed_room = 0;
-            ($request->Bathrooms) ? $Bathrooms = $request->Bathrooms: $Bathrooms = 0;
-            ($request->council) ? $council = $request->council: $council = 0;
-            ($request->individual) ? $individuals = $request->individual: $individuals = 0;
-            ($request->smoking) ? $smoking = $request->smoking: $smoking = 0;
-            ($request->insurance_value) ? $insurance_value = $request->insurance_value: $insurance_value = 0;
-            ($request->kitchen_table) ? $kitchen_table = $request->kitchen_table: $kitchen_table = 0;
-            ($request->Tour_guide_included) ? $Tour_guide_included = $request->Tour_guide_included: $Tour_guide_included = 0;
-            ($request->housing_included) ? $housing_included = $request->housing_included: $housing_included = 0;
-            ($request->main_meal) ? $main_meal = $request->main_meal: $main_meal = 0;
-            ($request->flight_tickets) ? $flight_tickets = $request->flight_tickets: $flight_tickets = 0;
-            ($request->breakfast) ? $breakfast = $request->breakfast: $breakfast = 0;
-            ($request->lunch) ? $lunch = $request->lunch: $lunch = 0;
-            ($request->dinner) ? $dinner = $request->dinner: $dinner = 0;
+            ($request->insurance) ? $insurance = $request->insurance : $insurance = 0;
+            ($request->families) ? $families = $request->families : $families = 0;
+            ($request->animals) ? $animals = $request->animals : $animals = 0;
+            ($request->visits) ? $visits = $request->visits : $visits = 0;
+            ($request->bed_room) ? $bed_room = $request->bed_room : $bed_room = 0;
+            ($request->Bathrooms) ? $Bathrooms = $request->Bathrooms : $Bathrooms = 0;
+            ($request->council) ? $council = $request->council : $council = 0;
+            ($request->individual) ? $individuals = $request->individual : $individuals = 0;
+            ($request->smoking) ? $smoking = $request->smoking : $smoking = 0;
+            ($request->insurance_value) ? $insurance_value = $request->insurance_value : $insurance_value = 0;
+            ($request->kitchen_table) ? $kitchen_table = $request->kitchen_table : $kitchen_table = 0;
+            ($request->Tour_guide_included) ? $Tour_guide_included = $request->Tour_guide_included : $Tour_guide_included = 0;
+            ($request->housing_included) ? $housing_included = $request->housing_included : $housing_included = 0;
+            ($request->main_meal) ? $main_meal = $request->main_meal : $main_meal = 0;
+            ($request->flight_tickets) ? $flight_tickets = $request->flight_tickets : $flight_tickets = 0;
+            ($request->breakfast) ? $breakfast = $request->breakfast : $breakfast = 0;
+            ($request->lunch) ? $lunch = $request->lunch : $lunch = 0;
+            ($request->dinner) ? $dinner = $request->dinner : $dinner = 0;
             $this->detialModel::create([
                 'insurance' => $insurance,
                 'families' => $families,
@@ -448,6 +436,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $th->getMessage());
         }
     }
+
     public function getCitiesData(Request $request, $id)
     {
         $lang = $this->returnLang($request);
@@ -459,6 +448,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+
     public function getStreetsData(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -518,22 +508,16 @@ class HomeScreenController extends Controller
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
-            if($request->front_photo)
-            {
+            if ($request->front_photo) {
                 $front_photo = random_int(11111111, 999999999) . '_UserDetials.' . $request->front_photo->extension();
                 $this->uploadImage($request->front_photo, $front_photo, 'UserDetials');
-            }
-            else
-            {
+            } else {
                 $front_photo = null;
             }
-            if($request->back_photo)
-            {
+            if ($request->back_photo) {
                 $back_photo = random_int(11111111, 999999999) . '_UserDetials.' . $request->back_photo->extension();
                 $this->uploadImage($request->back_photo, $back_photo, 'UserDetials');
-            }
-            else
-            {
+            } else {
                 $back_photo = null;
             }
             $this->userDetiaslModel::create([
@@ -612,7 +596,7 @@ class HomeScreenController extends Controller
                 if ($wheelUser) {
                     $wheel->timetotryagain = Carbon::parse($wheelUser->created_at)->addHours(24);
                 } else {
-                    $wheel->timetotryagain =  Carbon::now();
+                    $wheel->timetotryagain = Carbon::now();
                 }
             }
             return $this->returnData("data", ["wheels" => $wheels], __('api.successMessage'));
@@ -667,6 +651,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+
     public function getWallet(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -743,6 +728,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $th->getMessage());
         }
     }
+
     public function deleteNotification(Request $request)
     {
         try {
@@ -893,35 +879,28 @@ class HomeScreenController extends Controller
                         array_push($ads, $ad);
                     }
                 }
-            }
-            elseif ($request->travel_type) {
+            } elseif ($request->travel_type) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
-                    if($request->travel_type == $ad["travel_type_id"])
-                    {
+                    if ($request->travel_type == $ad["travel_type_id"]) {
                         array_push($ads, $ad);
                     }
                 }
-            }
-            elseif ($request->chalets) {
+            } elseif ($request->chalets) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
-                    if($ad["chalets"] == 1)
-                    {
+                    if ($ad["chalets"] == 1) {
                         array_push($ads, $ad);
                     }
                 }
-            }
-            elseif ($request->camp) {
+            } elseif ($request->camp) {
                 $data = $this->getCategoryAds($request->category_id, $request->user()->id);
                 foreach ($data as $ad) {
-                    if($ad["camp"] == 1)
-                    {
+                    if ($ad["camp"] == 1) {
                         array_push($ads, $ad);
                     }
                 }
-            }
-            elseif ($request->word) {
+            } elseif ($request->word) {
                 $ads = $this->getAdsSearch($request->category_id, $request->user()->id, $request->word);
             } else {
                 $ads = $this->getCategoryAds($request->category_id, $request->user()->id);
@@ -1003,6 +982,17 @@ class HomeScreenController extends Controller
             ]);
 
             return $this->returnSuccess(200, __('api.sendCommenet'));
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
+        }
+    }
+
+
+    public function date()
+    {
+        try {
+            $date = Date::where('status', 1)->get();
+            return $this->returnData("data", $date, __('api.successMessage'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
         }

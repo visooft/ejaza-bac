@@ -84,8 +84,8 @@ Route::group(['middleware' => ['api']], function () {
         Route::post('/forgetPassword', [AuthController::class, 'forgetPassword']);
         Route::post('/changePassword', [AuthController::class, 'changePassword']);
         Route::get('/splach', [HomeScreenController::class, 'splach']);
+        Route::get('/date', [HomeScreenController::class, 'date']);
         Route::get('/payment', [\App\Http\Controllers\Api\Payment::class, 'index']);
         Route::post('/payment', [\App\Http\Controllers\Api\Payment::class, 'post']);
-
     }
 });
