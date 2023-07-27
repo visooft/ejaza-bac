@@ -31,7 +31,9 @@ use Moyasar\Moyasar;
 class AuthController extends Controller
 {
     use GeneralTrait, getLang, ImagesTrait, smsTrait, paymentTrait;
+
     private $userModel, $appModel, $validateModel, $otpModel, $countryModel, $hashModel, $roleModel, $fatoorahService;
+
     public function __construct(Validator $validate, User $user, App $app, Otp $otp, Country $country, Hash $hash, Roles $role, FatoorahService $fatoorahService)
     {
         $this->validateModel = $validate;
@@ -418,6 +420,7 @@ class AuthController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+
     public function updateProfile(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -497,6 +500,7 @@ class AuthController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+
     public function getProfileData(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -553,7 +557,9 @@ class AuthController extends Controller
             return $this->returnError(403, __('api.errorMessage'));
         }
     }
+
     public $addition_value;
+
     public function order(Request $request)
     {
         // require_once env('APP_URL').'en/autoload.php';
@@ -572,7 +578,8 @@ class AuthController extends Controller
                 'name' => 'nullable|string',
                 'email' => 'nullable|string',
                 'phone' => 'nullable|string',
-                'payment_type' => 'required|in:cash,online,wallet'
+                'payment_type' => 'required|in:cash,online,wallet',
+                'category_id' => 'required|exists:categories,id',
             ];
             $validator = $this->validateModel::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -586,15 +593,23 @@ class AuthController extends Controller
                 $randomString .= $characters[rand(0, $charactersLength - 1)];
             }
             $house = Housing::find($request->house_id);
-            // dd($house);
+            if ($request->category_id == '1') {
+                $house->update([
+                    'ticket_count' => $house->ticket_count - $request->count,
+                ]);
+            } else {
+                $house->update([
+                    'ticket_count' => $house->ticket_count - $request->count,
+                ]);
+            }
+
             $offer = Offers::where('housings_id', $house->id)->first();
             if ($offer) {
                 $price = $house->price - ($house->price * $offer->offer / 100);
                 $totalPrice = $price * $request->count;
             } else {
                 $setting = Setting::all();
-                foreach ($setting as $settin)
-                {
+                foreach ($setting as $settin) {
                     if ($settin->key == "addition_value") {
                         $this->addition_value = $settin->value;
                     }
@@ -647,6 +662,7 @@ class AuthController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
+
     public function addCoupon(Request $request)
     {
         $lang = $this->returnLang($request);
@@ -722,7 +738,8 @@ class AuthController extends Controller
             if (!$country) {
                 return $this->returnError(403, 'هذا البلد غير موجود');
             } else {
-                $request->user()->update([
+                $user = User::find(auth()->id());
+                $user->update([
                     'country_id' => $request->country_id
                 ]);
             }
