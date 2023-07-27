@@ -650,7 +650,7 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-
+                    $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
