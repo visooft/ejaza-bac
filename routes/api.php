@@ -40,7 +40,7 @@ Route::group(['middleware' => ['api']], function () {
                 Route::post('/updatePassword', [AuthController::class, 'updatePassword']);
                 Route::get('/homeScreen', [HomeScreenController::class, 'homeScreen']);
                 Route::get('/getAds', [HomeScreenController::class, 'getAds']);
-                Route::get('/changeCountry', [AuthController::class, 'changeCounry']);
+                Route::post('/changeCountry', [AuthController::class, 'changeCounry']);
                 Route::get('/getAdsByCity', [HomeScreenController::class, 'getAdsByCity']);
                 Route::get('/getAdsByCategory', [HomeScreenController::class, 'getAdsByCategory']);
                 Route::post('/filter', [HomeScreenController::class, 'filter']);
