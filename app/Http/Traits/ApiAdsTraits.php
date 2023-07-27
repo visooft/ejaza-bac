@@ -33,11 +33,11 @@ trait ApiAdsTraits
                         }
                     } else {
                         if ($category->id == 6) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
                         } elseif ($category->id == 8) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                         } else {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                         }
                     }
                 } else {
