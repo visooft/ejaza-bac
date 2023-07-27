@@ -579,7 +579,7 @@ class AuthController extends Controller
                 'email' => 'nullable|string',
                 'phone' => 'nullable|string',
                 'payment_type' => 'required|in:cash,online,wallet',
-                'status' => 'required|boolean',
+                'status' => 'required|in:0,1',
             ];
             $validator = $this->validateModel::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -599,7 +599,7 @@ class AuthController extends Controller
                 ]);
             }
             if ($house->category_id == 3 || $house->category_id == 4 || $house->category_id == 5) {
-                if ($request->status) {
+                if ($request->status == 1) {
                     $house->update([
                         'is_pay' => 1,
                     ]);
