@@ -708,7 +708,7 @@ trait ApiAdsTraits
     public function getCategoryAds($id, $user_id)
     {
         $category = $this->categoryModel::find($id);
-        $ads = $this->houseModel::where(['category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
+        $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
         $data = $this->getAdsData($category, $ads, $user_id);
         return $data;
     }
