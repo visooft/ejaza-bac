@@ -305,11 +305,11 @@ class AuthController extends Controller
                     $mobile = "966" . substr($request->user()->phone, 3);
                 }
             }
-            $responce = $this->_fireSMS($mobile, $otp);
-            $data = json_decode($responce);
-            if ($data->status == "F") {
-                return $this->returnError(403, 'برجاء مراجعة الدعم الفني');
-            }
+//            $responce = $this->_fireSMS($mobile, $otp);
+//            $data = json_decode($responce);
+//            if ($data->status == "F") {
+//                return $this->returnError(403, 'برجاء مراجعة الدعم الفني');
+//            }
             $this->otpModel::create([
                 'otp' => $otp,
                 'phone' => $request->user()->phone,
