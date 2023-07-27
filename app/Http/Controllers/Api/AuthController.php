@@ -305,11 +305,11 @@ class AuthController extends Controller
                     $mobile = "966" . substr($request->user()->phone, 3);
                 }
             }
-//            $responce = $this->_fireSMS($mobile, $otp);
-//            $data = json_decode($responce);
-//            if ($data->status == "F") {
-//                return $this->returnError(403, 'برجاء مراجعة الدعم الفني');
-//            }
+            $responce = $this->_fireSMS($mobile, $otp);
+            $data = json_decode($responce);
+            if ($data->status == "F") {
+                return $this->returnError(403, 'برجاء مراجعة الدعم الفني');
+            }
             $this->otpModel::create([
                 'otp' => $otp,
                 'phone' => $request->user()->phone,
@@ -579,6 +579,7 @@ class AuthController extends Controller
                 'email' => 'nullable|string',
                 'phone' => 'nullable|string',
                 'payment_type' => 'required|in:cash,online,wallet',
+                'status' => 'required|boolean',
             ];
             $validator = $this->validateModel::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -597,7 +598,13 @@ class AuthController extends Controller
                     'ticket_count' => $house->ticket_count - $request->count,
                 ]);
             }
-
+            if ($house->category_id == 3 || $house->category_id == 4 || $house->category_id == 5) {
+                if ($request->status) {
+                    $house->update([
+                        'is_pay' => true,
+                    ]);
+                }
+            }
             $offer = Offers::where('housings_id', $house->id)->first();
             if ($offer) {
                 $price = $house->price - ($house->price * $offer->offer / 100);
