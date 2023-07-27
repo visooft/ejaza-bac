@@ -55,7 +55,6 @@ class AuthController extends Controller
                 'phone' => 'required|numeric|exists:users,phone',
                 'password' => 'required|min:8',
                 'device_token' => 'required',
-                'country_id' => 'required|exists:countries,id',
             ];
 
             $validator = $this->validateModel::make($request->all(), $rules);
@@ -83,7 +82,7 @@ class AuthController extends Controller
                     }
                     $token = $user->createToken("API TOKEN")->plainTextToken;
                     $token = "Bearer " . $token;
-                    $user->update(['device_token' => $request->device_token, 'token' => $token, 'country_id' => $request->country_id]);
+                    $user->update(['device_token' => $request->device_token, 'token' => $token]);
                     $this->otpModel::where(['phone' => $request->phone])->delete();
                     $this->otpModel::create([
                         'otp' => $otp,
@@ -115,7 +114,7 @@ class AuthController extends Controller
                 if (!$token) {
                     return $this->returnError(401, __('api.notAllow'));
                 }
-                $user->update(['device_token' => $request->device_token, 'token' => $token, 'country_id' => $request->country_id]);
+                $user->update(['device_token' => $request->device_token, 'token' => $token]);
                 $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date']);
                 $data->token = $token;
                 $city = $this->countryModel::find($user->country_id);
