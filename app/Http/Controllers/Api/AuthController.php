@@ -579,7 +579,6 @@ class AuthController extends Controller
                 'email' => 'nullable|string',
                 'phone' => 'nullable|string',
                 'payment_type' => 'required|in:cash,online,wallet',
-                'category_id' => 'required|exists:categories,id',
             ];
             $validator = $this->validateModel::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -593,11 +592,7 @@ class AuthController extends Controller
                 $randomString .= $characters[rand(0, $charactersLength - 1)];
             }
             $house = Housing::find($request->house_id);
-            if ($request->category_id == '1') {
-                $house->update([
-                    'ticket_count' => $house->ticket_count - $request->count,
-                ]);
-            } else {
+            if ($house->category_id == 6) {
                 $house->update([
                     'ticket_count' => $house->ticket_count - $request->count,
                 ]);
