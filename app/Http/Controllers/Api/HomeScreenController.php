@@ -343,7 +343,7 @@ class HomeScreenController extends Controller
                 'lat' => $request->lat,
                 'long' => $request->long,
                 'city_id' => $request->city_id,
-                'country_id' => $request->country_id,  // 👈 I change this @comment 1
+                'country_id' => auth()->user()->country_id,
                 'street_id' => $request->street_id,
                 'user_id' => $request->user()->id,
                 'category_id' => $request->category_id,
