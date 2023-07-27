@@ -884,7 +884,7 @@ trait ApiAdsTraits
 
                 ($ad->travel_type_id) ? $data[$key]["travel_type_id"] = $ad->travel_type_id : $data[$key]["travel_type_id"] = "";
                 ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
-                ($ad->long) ? $data[$key]["long"] = $ad->lat : $data[$key]["long"] = "";
+                ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
                 ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
@@ -1101,7 +1101,7 @@ trait ApiAdsTraits
                 }
                 $data[$key]["Accompanying"] = $AccompanyingData;
                 ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
-                ($ad->long) ? $data[$key]["long"] = $ad->lat : $data[$key]["long"] = "";
+                ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
                 ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
@@ -1322,7 +1322,7 @@ trait ApiAdsTraits
                 }
                 $data[$key]["Accompanying"] = $AccompanyingData;
                 ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
-                ($ad->long) ? $data[$key]["long"] = $ad->lat : $data[$key]["long"] = "";
+                ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
                 ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
@@ -1546,7 +1546,7 @@ trait ApiAdsTraits
                 }
                 $data[$key]["Accompanying"] = $AccompanyingData;
                 ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
-                ($ad->long) ? $data[$key]["long"] = $ad->lat : $data[$key]["long"] = "";
+                ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
                 ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
