@@ -24,12 +24,30 @@ trait ApiAdsTraits
             if ($category->id) {
                 if ($request->city_id) {
                     if ($request->city_id == "all") {
-                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                        if ($category->id == 6) {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                        } elseif ($category->id == 8) {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                        } else {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                        }
                     } else {
-                        $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                        if ($category->id == 6) {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                        } elseif ($category->id == 8) {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                        } else {
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                        }
                     }
                 } else {
-                    $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                    if ($category->id == 6) {
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                    } elseif ($category->id == 8) {
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                    } else {
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                    }
                 }
                 if ($ad) {
                     $category = $this->categoryModel::find($ad->category_id);
@@ -44,11 +62,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_en;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -59,11 +73,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_tr;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -77,11 +87,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_ar;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -274,11 +280,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_en;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -289,11 +291,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_tr;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -307,11 +305,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_ar;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -500,11 +494,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_en;
                         } elseif ($category->id == 8) {
                             $ad->name = $ad->event_name_en;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_en;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_en;
                         }
                         $ad->desc = $ad->desc_en;
@@ -515,11 +505,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type_tr;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name_tr;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_tr;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_tr;
                         }
                         ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -533,11 +519,7 @@ trait ApiAdsTraits
                             $ad->name = $ad->car_type;
                         } elseif ($category->id == 6) {
                             $ad->name = $ad->event_name;
-                        }
-//                        elseif ($category->id == 8) {
-//                            $ad->name = $type->name_ar;
-//                        }
-                        else {
+                        } else {
                             $ad->name = $ad->name_ar;
                         }
                         ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -708,7 +690,13 @@ trait ApiAdsTraits
     public function getCategoryAds($id, $user_id)
     {
         $category = $this->categoryModel::find($id);
-        $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
+        if ($id == 6) {
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+        } elseif ($id == 8) {
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
+        } else {
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
+        }
         $data = $this->getAdsData($category, $ads, $user_id);
         return $data;
     }
@@ -717,11 +705,11 @@ trait ApiAdsTraits
     {
         $category = $this->categoryModel::find($id);
         if (app()->getLocale() == "ar") {
-            $ads = $this->houseModel::where(['category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
         } elseif (app()->getLocale() == "en") {
-            $ads = $this->houseModel::where(['category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
         } else {
-            $ads = $this->houseModel::where(['category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
         }
 
         $data = $this->getAdsData($category, $ads, $user_id);
@@ -757,11 +745,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_en;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -772,11 +756,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_tr;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -790,11 +770,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_ar;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -990,11 +966,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_en;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -1005,11 +977,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_tr;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -1023,11 +991,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_ar;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -1215,11 +1179,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_en;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -1230,11 +1190,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_tr;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -1248,11 +1204,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_ar;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
@@ -1458,11 +1410,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_en;
                     } elseif ($category->id == 8) {
                         $ad->name = $ad->event_name_en;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_en;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_en;
                     }
                     $ad->desc = $ad->desc_en;
@@ -1473,11 +1421,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type_tr;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name_tr;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_tr;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_tr;
                     }
                     ($ad->language_id) ? $data[$key]["language"] = $tr->translate($ad->language_id) : $data[$key]["language"] = "";
@@ -1491,11 +1435,7 @@ trait ApiAdsTraits
                         $ad->name = $ad->car_type;
                     } elseif ($category->id == 6) {
                         $ad->name = $ad->event_name;
-                    }
-//                    elseif ($category->id == 8) {
-//                        $ad->name = $type->name_ar;
-//                    }
-                    else {
+                    } else {
                         $ad->name = $ad->name_ar;
                     }
                     ($type) ? $data[$key]["travel_type"] = $type->name_ar : $data[$key]["travel_type"] = "";
