@@ -601,7 +601,7 @@ class AuthController extends Controller
             if ($house->category_id == 3 || $house->category_id == 4 || $house->category_id == 5) {
                 if ($request->status) {
                     $house->update([
-                        'is_pay' => true,
+                        'is_pay' => 1,
                     ]);
                 }
             }
