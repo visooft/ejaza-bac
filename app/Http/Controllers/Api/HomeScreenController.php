@@ -13,6 +13,7 @@ use App\Http\Traits\ImagesTrait;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Comments;
+use App\Models\Date;
 use App\Models\Favourites;
 use App\Models\HouseDetials;
 use App\Models\HouseTerms;
