@@ -9,6 +9,7 @@ use App\Http\Traits\ImagesTrait;
 use App\Http\Traits\paymentTrait;
 use App\Http\Traits\smsTrait;
 use App\Http\Services\FatoorahService;
+use App\Models\Contact;
 use App\Models\Country;
 use App\Models\Otp;
 use App\Models\Housing;
@@ -748,6 +749,46 @@ class AuthController extends Controller
             return $this->returnData('data', null, 'تم تغيير البلد بنجاح');
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
+        }
+    }
+
+
+    public function contact()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'message' => 'required|string',
+            'subject' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'حدث خطأ ما',
+                'data' => $validator->errors(),
+            ]);
+        }
+        try {
+            $data = new Contact();
+            $data->name = request()->name;
+            $data->email = strtolower(request()->email);
+            $data->phone = request()->phone;
+            $data->message = request()->message;
+            $data->subjecet = request()->subject;
+            $data->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'تم ارسال الرسالة بنجاح',
+                'data' => $data,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'حدث خطأ ما',
+                'data' => $e->getMessage(),
+            ]);
         }
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DataController;
 use App\Http\Controllers\Api\FavouriteController;
 use App\Http\Controllers\Api\HomeScreenController;
+use App\Http\Traits\ApiAdsTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -88,6 +89,6 @@ Route::group(['middleware' => ['api']], function () {
         Route::get('/date', [HomeScreenController::class, 'date']);
         Route::get('/payment', [\App\Http\Controllers\Api\Payment::class, 'index']);
         Route::post('/payment', [\App\Http\Controllers\Api\Payment::class, 'post']);
-
+        Route::post('/contact', [AuthController::class, 'contact']);
     }
 });
