@@ -8,6 +8,7 @@ use App\Models\Accompanying;
 use App\Models\Streets;
 use App\Models\travelType;
 use App\Models\travelCountry;
+use App\Models\User;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 trait ApiAdsTraits
@@ -25,28 +26,28 @@ trait ApiAdsTraits
                 if ($request->city_id) {
                     if ($request->city_id == "all") {
                         if ($category->id == 6) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
                         } elseif ($category->id == 8) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                         } else {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                         }
                     } else {
                         if ($category->id == 6) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
                         } elseif ($category->id == 8) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                         } else {
-                            $ad = $this->houseModel::where(['category_id' => $category->id,'city_id' => $request->city_id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                         }
                     }
                 } else {
                     if ($category->id == 6) {
-                        $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
                     } elseif ($category->id == 8) {
-                        $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                     } else {
-                        $ad = $this->houseModel::where(['category_id' => $category->id,'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'is_pay' => 0, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                     }
                 }
                 if ($ad) {
@@ -218,6 +219,7 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -436,6 +438,7 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -650,6 +653,7 @@ trait ApiAdsTraits
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -691,11 +695,11 @@ trait ApiAdsTraits
     {
         $category = $this->categoryModel::find($id);
         if ($id == 6) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
         } elseif ($id == 8) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
         } else {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
         }
         $data = $this->getAdsData($category, $ads, $user_id);
         return $data;
@@ -706,27 +710,27 @@ trait ApiAdsTraits
         $category = $this->categoryModel::find($id);
         if (app()->getLocale() == "ar") {
             if ($id == 6) {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             }
         } elseif (app()->getLocale() == "en") {
             if ($id == 6) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             }
         } else {
             if ($id == 6) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id,'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'is_pay' => 0, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             }
         }
 
@@ -922,6 +926,7 @@ trait ApiAdsTraits
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
@@ -1139,6 +1144,7 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -1360,6 +1366,7 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -1584,6 +1591,7 @@ trait ApiAdsTraits
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
 
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
