@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\DelivaryController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EventsController;
@@ -44,6 +45,8 @@ use App\Http\Controllers\Admin\WheelOfFortunesController;
 use App\Http\Controllers\Seller\OrderController as orderSellerController;
 use App\Http\Controllers\Seller\productController;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Livewire\DateMange;
+use App\Http\Livewire\Payments;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -183,7 +186,7 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
             Route::PUT('/hideSlider', [SliderController::class, 'hideSlider'])->name('sliders.hide');
         }
     );
-    
+
     /**
      * Route for Adspace
      */
@@ -303,7 +306,7 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
         }
     );
 
-   
+
     Route::group(
         ['prefix' => '/accompanying', 'middleware' => 'can:ads'],
         function () {
@@ -348,7 +351,7 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
             Route::PUT('/hideAds', [CategoryController::class, 'market_typehideAds'])->name('market_type.hide');
         }
     );
-    
+
     Route::group(
         ['prefix' => '/travel_country', 'middleware' => 'can:ads'],
         function () {
@@ -815,4 +818,18 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
             Route::post('/filterClient', [financialReportsController::class, 'filterClient'])->name('filterClient');
         }
     );
+    Route::group(
+        ['prefix' => '/date'],
+        function () {
+            Route::get('/', [DateController::class,'index'])->name('date');
+            Route::post('/create', [DateController::class,'store'])->name('date.store');
+            Route::put('/update', [DateController::class,'update'])->name('date.update');
+            Route::put('/show', [DateController::class,'show'])->name('date.show');
+            Route::put('/hide', [DateController::class,'hide'])->name('date.hide');
+            Route::delete('/remove', [DateController::class,'delete'])->name('date.delete');
+        }
+    );
 });
+
+Route::get('/payment', Payments::class)->name('payments');
+Route::get('/payment/save', Payments::class)->name('payments.save');
