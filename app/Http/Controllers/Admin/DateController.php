@@ -51,7 +51,7 @@ class DateController extends Controller
         $year->update([
             'status' => 0
         ]);
-        return back()->with('done', 'تم اخفاء الدولة بنجاح');
+        return back()->with('done', 'تم اخفاء التاريخ بنجاح');
     }
 
     public function show(Request $request)
@@ -60,6 +60,6 @@ class DateController extends Controller
         $year->update([
             'status' => 1
         ]);
-        return back()->with('done', 'تم اظهار الدولة بنجاح');
+        return back()->with('done', 'تم اظهار التاريخ بنجاح');
     }
 }
