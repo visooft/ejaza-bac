@@ -668,7 +668,7 @@ class AuthController extends Controller
                 'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name,
             ]);
 
-            $firebaseToken = User::where('id', $house->user_id)->pluck('firebaseToken')->toArray();
+            $firebaseToken = User::where('id', $house->user_id)->pluck('device_token')->toArray();
             $setting = Setting::where('key', 'firebaseKey')->first();
             if ($setting) {
                 $SERVER_API_KEY = $setting->value;
