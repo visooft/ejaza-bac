@@ -1041,11 +1041,17 @@ class HomeScreenController extends Controller
     public function rate()
     {
         try {
-            $rate = new Rate();
-            $rate->user_id = auth()->id();
-            $rate->housings_id = request()->ads_id;
-            $rate->rate = request()->rate;
-            $rate->save();
+            $rate = Rate::where('user_id', auth()->id())->where('housings_id', request()->ads_id)->first();
+            if ($rate) {
+                $rate->rate = request()->rate;
+                $rate->save();
+            } else {
+                $rate = new Rate();
+                $rate->user_id = auth()->id();
+                $rate->housings_id = request()->ads_id;
+                $rate->rate = request()->rate;
+                $rate->save();
+            }
             return $this->returnData("data", $rate, __('api.successMessage'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
