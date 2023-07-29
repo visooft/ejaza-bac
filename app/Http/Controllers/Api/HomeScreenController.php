@@ -999,12 +999,26 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
-
     public function date()
     {
         try {
             $date = Date::where('status', 1)->get();
             return $this->returnData("data", $date, __('api.successMessage'));
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
+        }
+    }
+
+    public function comment()
+    {
+        try {
+            $comment = new Comments();
+            $comment->user_id = auth()->id();
+            $comment->housings_id = request()->ads_id;
+            $comment->commenet = request()->commenet;
+            $comment->rate = '0';
+            $comment->save();
+            return $this->returnData("data", $comment, __('api.successMessage'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
         }
