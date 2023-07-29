@@ -463,6 +463,8 @@ trait ApiAdsTraits
                     } else {
                         $data[$key]["rate"] = 0;
                     }
+                    $data[$key]["rate_count"] = count($rate);
+                    $data[$key]["rate_users"] = $rate;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -687,6 +689,8 @@ trait ApiAdsTraits
                     } else {
                         $data[$key]["rate"] = 0;
                     }
+                    $data[$key]["rate_count"] = count($rate);
+                    $data[$key]["rate_users"] = $rate;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -970,6 +974,8 @@ trait ApiAdsTraits
                 } else {
                     $data[$key]["rate"] = 0;
                 }
+                $data[$key]["rate_count"] = count($rate);
+                $data[$key]["rate_users"] = $rate;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1196,6 +1202,8 @@ trait ApiAdsTraits
                 } else {
                     $data[$key]["rate"] = 0;
                 }
+                $data[$key]["rate_count"] = count($rate);
+                $data[$key]["rate_users"] = $rate;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1427,6 +1435,8 @@ trait ApiAdsTraits
                 } else {
                     $data[$key]["rate"] = 0;
                 }
+                $data[$key]["rate_count"] = count($rate);
+                $data[$key]["rate_users"] = $rate;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1661,6 +1671,8 @@ trait ApiAdsTraits
                 } else {
                     $data[$key]["rate"] = 0;
                 }
+                $data[$key]["rate_count"] = count($rate);
+                $data[$key]["rate_users"] = $rate;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
