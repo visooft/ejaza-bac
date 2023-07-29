@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PayController;
 use App\Http\Controllers\Admin\ResturantController;
 use App\Http\Controllers\Web\ResturantController as WebResturantController;
 use App\Http\Controllers\Admin\ResturantProductController;
@@ -821,15 +822,23 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
     Route::group(
         ['prefix' => '/date'],
         function () {
-            Route::get('/', [DateController::class,'index'])->name('date');
-            Route::post('/create', [DateController::class,'store'])->name('date.store');
-            Route::put('/update', [DateController::class,'update'])->name('date.update');
-            Route::put('/show', [DateController::class,'show'])->name('date.show');
-            Route::put('/hide', [DateController::class,'hide'])->name('date.hide');
-            Route::delete('/remove', [DateController::class,'delete'])->name('date.delete');
+            Route::get('/', [DateController::class, 'index'])->name('date');
+            Route::post('/create', [DateController::class, 'store'])->name('date.store');
+            Route::put('/update', [DateController::class, 'update'])->name('date.update');
+            Route::put('/show', [DateController::class, 'show'])->name('date.show');
+            Route::put('/hide', [DateController::class, 'hide'])->name('date.hide');
+            Route::delete('/remove', [DateController::class, 'delete'])->name('date.delete');
         }
     );
+    Route::group(
+        ['prefix' => '/payment'],
+        function () {
+            Route::get('/', [PayController::class, 'index'])->name('payments');
+            Route::put('/update', [PayController::class, 'update'])->name('payments.update');
+            Route::put('/show', [PayController::class, 'show'])->name('payments.show');
+            Route::put('/hide', [PayController::class, 'hide'])->name('payments.hide');
+        }
+    );
+
 });
 
-Route::get('/payment', Payments::class)->name('payments');
-Route::get('/payment/save', Payments::class)->name('payments.save');

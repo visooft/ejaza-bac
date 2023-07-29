@@ -7,7 +7,6 @@ use App\Models\Payment as PaymentModel;
 
 class Payment extends Controller
 {
-    public $images = array();
     public function index()
     {
         try {
