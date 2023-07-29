@@ -191,7 +191,7 @@ trait ApiAdsTraits
                     ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
                     ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
                     $data[$key]["token"] = $ad->user->token;
-                    $data[$key]["commenets"] = $comments2Data;
+                    $data[$key]["commenets"] = $commentsData;
                     $data[$key]["images"] = $images;
                     $data[$key]["terms"] = $termData;
                     $data[$key]["families"] = $detials->families;
@@ -228,8 +228,13 @@ trait ApiAdsTraits
                     foreach ($rate as $r) {
                         $total += $r->rate;
                     }
-                    $total = $total / count($rate);
-                    $data[$key]["rate"] = $total;
+                    if (count($rate) > 0) {
+                        $data[$key]["rate"] = $total / count($rate);
+                    } else {
+                        $data[$key]["rate"] = 0;
+                    }
+                    $data[$key]["rate_count"] = count($rate);
+                    $data[$key]["rate_users"] = $rate;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -453,8 +458,11 @@ trait ApiAdsTraits
                     foreach ($rate as $r) {
                         $total += $r->rate;
                     }
-                    $total = $total / count($rate);
-                    $data[$key]["rate"] = $total;
+                    if (count($rate) > 0) {
+                        $data[$key]["rate"] = $total / count($rate);
+                    } else {
+                        $data[$key]["rate"] = 0;
+                    }
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -674,8 +682,11 @@ trait ApiAdsTraits
                     foreach ($rate as $r) {
                         $total += $r->rate;
                     }
-                    $total = $total / count($rate);
-                    $data[$key]["rate"] = $total;
+                    if (count($rate) > 0) {
+                        $data[$key]["rate"] = $total / count($rate);
+                    } else {
+                        $data[$key]["rate"] = 0;
+                    }
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -954,8 +965,11 @@ trait ApiAdsTraits
                 foreach ($rate as $r) {
                     $total += $r->rate;
                 }
-                $total = $total / count($rate);
-                $data[$key]["rate"] = $total;
+                if (count($rate) > 0) {
+                    $data[$key]["rate"] = $total / count($rate);
+                } else {
+                    $data[$key]["rate"] = 0;
+                }
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1177,8 +1191,11 @@ trait ApiAdsTraits
                 foreach ($rate as $r) {
                     $total += $r->rate;
                 }
-                $total = $total / count($rate);
-                $data[$key]["rate"] = $total;
+                if (count($rate) > 0) {
+                    $data[$key]["rate"] = $total / count($rate);
+                } else {
+                    $data[$key]["rate"] = 0;
+                }
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1405,8 +1422,11 @@ trait ApiAdsTraits
                 foreach ($rate as $r) {
                     $total += $r->rate;
                 }
-                $total = $total / count($rate);
-                $data[$key]["rate"] = $total;
+                if (count($rate) > 0) {
+                    $data[$key]["rate"] = $total / count($rate);
+                } else {
+                    $data[$key]["rate"] = 0;
+                }
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1636,8 +1656,11 @@ trait ApiAdsTraits
                 foreach ($rate as $r) {
                     $total += $r->rate;
                 }
-                $total = $total / count($rate);
-                $data[$key]["rate"] = $total;
+                if (count($rate) > 0) {
+                    $data[$key]["rate"] = $total / count($rate);
+                } else {
+                    $data[$key]["rate"] = 0;
+                }
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
