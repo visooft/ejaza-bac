@@ -65,6 +65,7 @@ Route::group(['middleware' => ['api']], function () {
                 Route::get('/getCommenets', [HomeScreenController::class, 'getCommenets']);
                 Route::get('/getFavouries', [FavouriteController::class, 'getFavouries']);
                 Route::post('/comment', [HomeScreenController::class, 'comment']);
+                Route::get('/comment/{id}', [HomeScreenController::class, 'getComment']);
                 Route::post('/rate', [HomeScreenController::class, 'rate']);
             }
         );
