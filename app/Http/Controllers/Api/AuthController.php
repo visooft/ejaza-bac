@@ -11,6 +11,7 @@ use App\Http\Traits\smsTrait;
 use App\Http\Services\FatoorahService;
 use App\Models\Contact;
 use App\Models\Country;
+use App\Models\Notifications;
 use App\Models\Otp;
 use App\Models\Housing;
 use App\Models\Order;
@@ -660,6 +661,44 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'payment_type' => $request->payment_type,
             ]);
+
+            Notifications::create([
+                'user_id' => $house->user_id,
+                'subject' => 'تم حجز خدمتك بنجاح',
+                'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name,
+            ]);
+
+            $firebaseToken = User::where('id', $house->user_id)->pluck('firebaseToken')->toArray();
+            $setting = Setting::where('key', 'firebaseKey')->first();
+            if ($setting) {
+                $SERVER_API_KEY = $setting->value;
+            }
+
+            $data = [
+                "registration_ids" => $firebaseToken,
+                "notification" => [
+                    "title" => "تم حجز خدمتك بنجاح",
+                    "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name,
+                ]
+            ];
+
+            $dataString = json_encode($data);
+            $headers = [
+                'Authorization: key=' . $SERVER_API_KEY,
+                'Content-Type: application/json',
+            ];
+
+            $ch = curl_init();
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+            $response = curl_exec($ch);
+
             return $this->returnData('data', ['payment_type' => $request->payment_type], __('api.successOrder'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
