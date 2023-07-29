@@ -16,6 +16,7 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 
 trait ApiAdsTraits
 {
+    public $rate;
     public function getAdsByCity($request)
     {
         $user_id = $request->user()->id;
@@ -224,12 +225,11 @@ trait ApiAdsTraits
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                     $rate = Rate::where('housings_id', $ad->id)->get();
-                    $total = 0;
                     foreach ($rate as $r) {
-                        $total += $r->rate;
+                        $this->rate += $r->rate;
                     }
                     if (count($rate) > 0) {
-                        $data[$key]["rate"] = $total / count($rate);
+                        $data[$key]["rate"] = $this->rate / count($rate);
                     } else {
                         $data[$key]["rate"] = 0;
                     }
@@ -454,12 +454,11 @@ trait ApiAdsTraits
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                     $rate = Rate::where('housings_id', $ad->id)->get();
-                    $total = 0;
                     foreach ($rate as $r) {
-                        $total += $r->rate;
+                        $this->rate += $r->rate;
                     }
                     if (count($rate) > 0) {
-                        $data[$key]["rate"] = $total / count($rate);
+                        $data[$key]["rate"] = $this->rate / count($rate);
                     } else {
                         $data[$key]["rate"] = 0;
                     }
@@ -680,12 +679,11 @@ trait ApiAdsTraits
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                     $rate = Rate::where('housings_id', $ad->id)->get();
-                    $total = 0;
                     foreach ($rate as $r) {
-                        $total += $r->rate;
+                        $this->rate += $r->rate;
                     }
                     if (count($rate) > 0) {
-                        $data[$key]["rate"] = $total / count($rate);
+                        $data[$key]["rate"] = $this->rate / count($rate);
                     } else {
                         $data[$key]["rate"] = 0;
                     }
@@ -965,12 +963,11 @@ trait ApiAdsTraits
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                 $rate = Rate::where('housings_id', $ad->id)->get();
-                $total = 0;
                 foreach ($rate as $r) {
-                    $total += $r->rate;
+                    $this->rate += $r->rate;
                 }
                 if (count($rate) > 0) {
-                    $data[$key]["rate"] = $total / count($rate);
+                    $data[$key]["rate"] = $this->rate / count($rate);
                 } else {
                     $data[$key]["rate"] = 0;
                 }
@@ -1193,12 +1190,11 @@ trait ApiAdsTraits
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                 $rate = Rate::where('housings_id', $ad->id)->get();
-                $total = 0;
                 foreach ($rate as $r) {
-                    $total += $r->rate;
+                    $this->rate += $r->rate;
                 }
                 if (count($rate) > 0) {
-                    $data[$key]["rate"] = $total / count($rate);
+                    $data[$key]["rate"] = $this->rate / count($rate);
                 } else {
                     $data[$key]["rate"] = 0;
                 }
@@ -1426,12 +1422,11 @@ trait ApiAdsTraits
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                 $rate = Rate::where('housings_id', $ad->id)->get();
-                $total = 0;
                 foreach ($rate as $r) {
-                    $total += $r->rate;
+                    $this->rate += $r->rate;
                 }
                 if (count($rate) > 0) {
-                    $data[$key]["rate"] = $total / count($rate);
+                    $data[$key]["rate"] = $this->rate / count($rate);
                 } else {
                     $data[$key]["rate"] = 0;
                 }
@@ -1662,12 +1657,11 @@ trait ApiAdsTraits
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                 $rate = Rate::where('housings_id', $ad->id)->get();
-                $total = 0;
                 foreach ($rate as $r) {
-                    $total += $r->rate;
+                    $this->rate += $r->rate;
                 }
                 if (count($rate) > 0) {
-                    $data[$key]["rate"] = $total / count($rate);
+                    $data[$key]["rate"] = $this->rate / count($rate);
                 } else {
                     $data[$key]["rate"] = 0;
                 }
