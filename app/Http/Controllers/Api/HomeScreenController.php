@@ -23,6 +23,7 @@ use App\Models\Notifications;
 use App\Models\NotificationsDetials;
 use App\Models\Offers;
 use App\Models\Order;
+use App\Models\Rate;
 use App\Models\Travel;
 use App\Models\travelCountry;
 use App\Models\TravelImages;
@@ -999,6 +1000,7 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
+
     public function date()
     {
         try {
@@ -1019,6 +1021,20 @@ class HomeScreenController extends Controller
             $comment->rate = '0';
             $comment->save();
             return $this->returnData("data", $comment, __('api.successMessage'));
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
+        }
+    }
+
+    public function rate()
+    {
+        try {
+            $rate = new Rate();
+            $rate->user_id = auth()->id();
+            $rate->housings_id = request()->ads_id;
+            $rate->rate = request()->rate;
+            $rate->save();
+            return $this->returnData("data", $rate, __('api.successMessage'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
         }

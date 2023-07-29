@@ -2,13 +2,16 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Contact;
 use App\Models\Offers;
+use App\Models\Rate;
 use App\Models\Setting;
 use App\Models\Accompanying;
 use App\Models\Streets;
 use App\Models\travelType;
 use App\Models\travelCountry;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 trait ApiAdsTraits
@@ -188,7 +191,7 @@ trait ApiAdsTraits
                     ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
                     ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
                     $data[$key]["token"] = $ad->user->token;
-                    $data[$key]["commenets"] = $commentsData;
+                    $data[$key]["commenets"] = $comments2Data;
                     $data[$key]["images"] = $images;
                     $data[$key]["terms"] = $termData;
                     $data[$key]["families"] = $detials->families;
@@ -220,7 +223,13 @@ trait ApiAdsTraits
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
+                    $rate = Rate::where('housings_id', $ad->id)->get();
+                    $total = 0;
+                    foreach ($rate as $r) {
+                        $total += $r->rate;
+                    }
+                    $total = $total / count($rate);
+                    $data[$key]["rate"] = $total;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -439,7 +448,13 @@ trait ApiAdsTraits
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
+                    $rate = Rate::where('housings_id', $ad->id)->get();
+                    $total = 0;
+                    foreach ($rate as $r) {
+                        $total += $r->rate;
+                    }
+                    $total = $total / count($rate);
+                    $data[$key]["rate"] = $total;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -654,6 +669,13 @@ trait ApiAdsTraits
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                    $rate = Rate::where('housings_id', $ad->id)->get();
+                    $total = 0;
+                    foreach ($rate as $r) {
+                        $total += $r->rate;
+                    }
+                    $total = $total / count($rate);
+                    $data[$key]["rate"] = $total;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -927,8 +949,13 @@ trait ApiAdsTraits
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
-
+                $rate = Rate::where('housings_id', $ad->id)->get();
+                $total = 0;
+                foreach ($rate as $r) {
+                    $total += $r->rate;
+                }
+                $total = $total / count($rate);
+                $data[$key]["rate"] = $total;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1145,7 +1172,13 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
+                $rate = Rate::where('housings_id', $ad->id)->get();
+                $total = 0;
+                foreach ($rate as $r) {
+                    $total += $r->rate;
+                }
+                $total = $total / count($rate);
+                $data[$key]["rate"] = $total;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1367,7 +1400,13 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
+                $rate = Rate::where('housings_id', $ad->id)->get();
+                $total = 0;
+                foreach ($rate as $r) {
+                    $total += $r->rate;
+                }
+                $total = $total / count($rate);
+                $data[$key]["rate"] = $total;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1592,7 +1631,13 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
-
+                $rate = Rate::where('housings_id', $ad->id)->get();
+                $total = 0;
+                foreach ($rate as $r) {
+                    $total += $r->rate;
+                }
+                $total = $total / count($rate);
+                $data[$key]["rate"] = $total;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
