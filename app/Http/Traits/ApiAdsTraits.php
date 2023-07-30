@@ -225,14 +225,7 @@ trait ApiAdsTraits
                     $data[$key]["travel_name"] = $ad->travel_name;
                     $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                     $rate = Rate::where('housings_id', $ad->id)->get();
-                    foreach ($rate as $r) {
-                        $this->rate += $r->rate;
-                    }
-                    if (count($rate) > 0) {
-                        $data[$key]["rate"] = $this->rate / count($rate);
-                    } else {
-                        $data[$key]["rate"] = 0;
-                    }
+                    $data[$key]["rate"] = Rate::where('housings_id', $ad->id)->avg('rate');
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
