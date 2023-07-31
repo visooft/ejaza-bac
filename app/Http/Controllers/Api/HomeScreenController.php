@@ -1018,7 +1018,7 @@ class HomeScreenController extends Controller
             $comment->user_id = auth()->id();
             $comment->housings_id = request()->ads_id;
             $comment->commenet = request()->commenet;
-            $comment->rate = '0';
+            $comment->rate = request()->rate;
             $comment->save();
             return $this->returnData("data", $comment, __('api.successMessage'));
         } catch (\Exception $e) {
