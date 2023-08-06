@@ -228,6 +228,8 @@ trait ApiAdsTraits
                     $data[$key]["rate"] = Rate::where('housings_id', $ad->id)->avg('rate');
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
+                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["from_hours"] = $ad->from_hours;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -458,6 +460,8 @@ trait ApiAdsTraits
                     }
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
+                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["from_hours"] = $ad->from_hours;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -684,6 +688,8 @@ trait ApiAdsTraits
                     }
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
+                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["from_hours"] = $ad->from_hours;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -969,6 +975,8 @@ trait ApiAdsTraits
                 }
                 $data[$key]["rate_count"] = count($rate);
                 $data[$key]["rate_users"] = $rate;
+                $data[$key]["to_hours"] = $ad->to_hours;
+                $data[$key]["from_hours"] = $ad->from_hours;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                 ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                 ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -1195,6 +1203,8 @@ trait ApiAdsTraits
                 } else {
                     $data[$key]["rate"] = 0;
                 }
+                $data[$key]["to_hours"] = $ad->to_hours;
+                $data[$key]["from_hours"] = $ad->from_hours;
                 $data[$key]["rate_count"] = count($rate);
                 $data[$key]["rate_users"] = $rate;
                 ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
@@ -1420,6 +1430,8 @@ trait ApiAdsTraits
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
                 $rate = Rate::where('housings_id', $ad->id)->get();
+                $data[$key]["to_hours"] = $ad->to_hours;
+                $data[$key]["from_hours"] = $ad->from_hours;
                 foreach ($rate as $r) {
                     $this->rate += $r->rate;
                 }
@@ -1655,6 +1667,8 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["to_hours"] = $ad->to_hours;
+                $data[$key]["from_hours"] = $ad->from_hours;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 foreach ($rate as $r) {
                     $this->rate += $r->rate;
