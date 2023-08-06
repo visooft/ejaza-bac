@@ -246,6 +246,8 @@ class HomeScreenController extends Controller
                 'ticket_count' => 'nullable|numeric',
                 'hour_price' => 'nullable|numeric',
                 'passengers' => 'nullable|numeric',
+                'to_hours' => 'nullable|numeric',
+                'from_hours' => 'nullable|numeric',
             ];
 
             $validator = $this->validateModel::make($request->all(), $rules);
@@ -333,6 +335,8 @@ class HomeScreenController extends Controller
             ($request->go) ? $go = $request->go : $go = 0;
             ($request->back) ? $back = $request->back : $back = 0;
             ($request->count_days) ? $count_days = $request->count_days : $count_days = 0;
+            ($request->to_hours) ? $to_hours = $request->to_hours : $to_hours = 0;
+            ($request->from_hours) ? $from_hours = $request->from_hours : $from_hours = 0;
             $house = $this->houseModel::create([
                 'name_ar' => $name,
                 'name_en' => $name_en,
@@ -378,6 +382,8 @@ class HomeScreenController extends Controller
                 'travel_name' => $travel_name,
                 'travel_name_en' => $travel_name_en,
                 'travel_name_tr' => $travel_name_tr,
+                'to_hours' => $to_hours,
+                'from_hours' => $from_hours,
             ]);
             foreach ($imageData as $image) {
                 $this->imageModel::create([
