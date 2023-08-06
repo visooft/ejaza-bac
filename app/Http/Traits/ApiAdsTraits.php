@@ -17,6 +17,7 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 trait ApiAdsTraits
 {
     public $rate;
+
     public function getAdsByCity($request)
     {
         $user_id = $request->user()->id;
@@ -228,8 +229,10 @@ trait ApiAdsTraits
                     $data[$key]["rate"] = Rate::where('housings_id', $ad->id)->avg('rate');
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
-                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
+
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -251,7 +254,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -460,8 +463,10 @@ trait ApiAdsTraits
                     }
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
-                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
+
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
                     ($ad->to) ? $data[$key]["to"] = $ad->to : $data[$key]["to"] = "";
@@ -479,7 +484,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -688,8 +693,10 @@ trait ApiAdsTraits
                     }
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
-                     $data[$key]["to_hours"] = $ad->to_hours;
+                    $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
+
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
                     ($ad->from) ? $data[$key]["from"] = $ad->from : $data[$key]["from"] = "";
@@ -708,7 +715,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -964,6 +971,7 @@ trait ApiAdsTraits
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 foreach ($rate as $r) {
                     $this->rate += $r->rate;
@@ -998,7 +1006,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1194,6 +1202,7 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 foreach ($rate as $r) {
                     $this->rate += $r->rate;
@@ -1224,7 +1233,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1429,6 +1438,7 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 $data[$key]["to_hours"] = $ad->to_hours;
                 $data[$key]["from_hours"] = $ad->from_hours;
@@ -1463,7 +1473,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1667,6 +1677,7 @@ trait ApiAdsTraits
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
                 $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $data[$key]["to_hours"] = $ad->to_hours;
                 $data[$key]["from_hours"] = $ad->from_hours;
                 $rate = Rate::where('housings_id', $ad->id)->get();
@@ -1701,7 +1712,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1857,7 +1868,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
