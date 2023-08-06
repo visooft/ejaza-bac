@@ -92,7 +92,7 @@ class AuthController extends Controller
                         'otp' => $otp,
                         'phone' => $request->phone,
                     ]);
-                    $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date']);
+                    $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
                     $data->token = $token;
                     $city = $this->countryModel::find($user->country_id);
                     if ($lang == "en") {
@@ -119,7 +119,7 @@ class AuthController extends Controller
                     return $this->returnError(401, __('api.notAllow'));
                 }
                 $user->update(['device_token' => $request->device_token, 'token' => $token]);
-                $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date']);
+                $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
                 $data->token = $token;
                 $city = $this->countryModel::find($user->country_id);
                 if ($lang == "en") {
@@ -214,7 +214,7 @@ class AuthController extends Controller
                 'phone' => $request->phone,
             ]);
             $token = "Bearer " . $token;
-            $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date']);
+            $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
             $data->token = $token;
             $user->update(['token' => $token]);
             $city = $this->countryModel::find($user->country_id);
@@ -264,7 +264,7 @@ class AuthController extends Controller
                 $user = $request->user();
                 $user = $this->userModel::where(['phone' => $user->phone])->first();
                 $user->update(['status' => 1, 'device_token' => $request->device_token, 'token' => $token]);
-                $data = $this->userModel::where(['phone' => $user->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date']);
+                $data = $this->userModel::where(['phone' => $user->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
                 $data->token = $token;
                 $city = $this->countryModel::find($request->user()->country_id);
                 if ($lang == "en") {
@@ -508,7 +508,7 @@ class AuthController extends Controller
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $data = $this->userModel::where(['id' => $request->user()->id])->first(['name', 'email', 'phone', 'link', 'image', 'country_id', 'gender', 'nationality', 'birth_date']);
+            $data = $this->userModel::where(['id' => $request->user()->id])->first(['name', 'email', 'phone', 'link', 'image', 'country_id', 'gender', 'nationality', 'birth_date','documentation']);
             $city = $this->countryModel::find($data->country_id);
             if ($lang == "en") {
                 $data->country = $city->name_en;

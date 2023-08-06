@@ -17,6 +17,27 @@ class Housing extends Model
     //     return Carbon::createFromTimeStamp(strtotime($this->attributes['created_at']))->locale($lang)->diffForHumans();
     // }
 
+    protected $casts = [
+        'street_id' => 'string',
+        'category_id' => 'string',
+        'price' => 'string',
+        'group_travel' => 'string',
+        'indivdual_travel' => 'string',
+        'hour_work' => 'string',
+        'ticket_count' => 'string',
+        'hour_price' => 'string',
+        'go' => 'string',
+        'back' => 'string',
+        'count_days' => 'string',
+        'passengers' => 'string',
+        'license_number' => 'string',
+        'from' => 'string',
+        'to' => 'string',
+        'language_id' => 'string',
+        'iban' => 'string',
+        'moodle' => 'string',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

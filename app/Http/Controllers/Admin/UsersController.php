@@ -16,7 +16,9 @@ use Illuminate\Validation\Rules\Password;
 class UsersController extends Controller
 {
     use ImagesTrait;
+
     private $userModel, $adverticeModel, $roleModel, $cityModel, $carbonModel, $orderModel, $categoryModel, $shopModel, $countryModel;
+
     public function __construct(User $user, Roles $role, Carbon $carbon, Category $category, Country $country)
     {
         $this->userModel = $user;
@@ -25,6 +27,7 @@ class UsersController extends Controller
         $this->categoryModel = $category;
         $this->countryModel = $country;
     }
+
     public function users()
     {
         $role = $this->roleModel::where('name', 'User')->first(['id']);
@@ -88,6 +91,7 @@ class UsersController extends Controller
             'country_id' => $request->country_id,
             'link' => "https://visooft-code.com",
             'status' => 1,
+            'documentation' => '0',
         ]);
 
         return back()->with('message', __('dashboard.addMemberSuccess'));
@@ -158,6 +162,7 @@ class UsersController extends Controller
 
         return back()->with('done', __('dashboard.delteMemberSuccess'));
     }
+
     public function Accountverification($id)
     {
         $user = $this->userModel::find($id);
@@ -173,6 +178,19 @@ class UsersController extends Controller
         });
         return back()->with('done', __('dashboard.AccepeteAccountverification'));
     }
+
+    public function Accountdocumentation($id)
+    {
+        $user = $this->userModel::find($id);
+        if (!$user) {
+            return back();
+        }
+        $user->update([
+            'documentation' => !$user->documentation ? 1 : 0
+        ]);
+        return back()->with('done', __('dashboard.AccepeteAccountdocumentation'));
+    }
+
     public function Accountdeclined($id)
     {
         $user = $this->userModel::find($id);
@@ -184,6 +202,7 @@ class UsersController extends Controller
         ]);
         return back()->with('done', __('dashboard.rejectAccountverification'));
     }
+
     public function block($id)
     {
         $user = $this->userModel::find($id);
@@ -223,12 +242,11 @@ class UsersController extends Controller
             $order->categoryid = $shop->category->id;
             $order->countData = $countData;
             if (count($data) > 0) {
-                if ($order->categoryid == $data[$key-1]["categoryid"]) {
-                    $data[$key-1]["countData"] += $countData;
+                if ($order->categoryid == $data[$key - 1]["categoryid"]) {
+                    $data[$key - 1]["countData"] += $countData;
                     unset($orders[$key]);
                 }
-            }
-            else {
+            } else {
                 array_push($data, $order);
             }
         }
@@ -239,12 +257,10 @@ class UsersController extends Controller
             } else {
                 $category->nam = $category->name_en;
             }
-            $category->image = env('APP_URL')."Admin/images/category/".$category->image;
+            $category->image = env('APP_URL') . "Admin/images/category/" . $category->image;
             if ($orders[count($orders) - 1]->categoryid == $category->id) {
                 $category->countData = $orders[count($orders) - 1]->countData;
-            }
-            else
-            {
+            } else {
                 $category->countData = 0;
             }
         }

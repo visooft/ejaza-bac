@@ -136,6 +136,7 @@ Route::group(['prefix' => '/', 'middleware' => ['Admin', 'Lang']], function () {
             Route::get('/', [UsersController::class, 'users'])->name('users');
             Route::get('Accountverification/{id}', [UsersController::class, 'Accountverification'])->name('Accountverification');
             Route::get('Accountdeclined/{id}', [UsersController::class, 'Accountdeclined'])->name('Accountdeclined');
+            Route::get('Accountdocumentation/{id}', [UsersController::class, 'Accountdocumentation'])->name('Accountdocumentation');
             Route::delete('/', [UsersController::class, 'delete'])->name('user.delete');
             Route::post('/', [UsersController::class, 'store'])->name('user.store');
             Route::PUT('/', [UsersController::class, 'update'])->name('user.update');
