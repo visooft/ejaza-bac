@@ -1070,10 +1070,9 @@ class HomeScreenController extends Controller
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $wallet = auth()->user()->wallet;
-            User::update([
-                'wallet' => $wallet - $request->price
-            ]);
+            $user = User::where('id', auth()->id())->first();
+            $user->wallet = $user->wallet - $request->price;
+            $user->save();
             Wallet::create([
                 'desc_ar' => 'تم خضم ' . $request->price . ' ريال سعودي من المحفظة الخاصة بك    ',
                 'desc_en' => ' has been rival ' . $request->price . ' SAR from your wallet',
