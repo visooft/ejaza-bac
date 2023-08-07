@@ -67,6 +67,7 @@ Route::group(['middleware' => ['api']], function () {
                 Route::post('/comment', [HomeScreenController::class, 'comment']);
                 Route::get('/comment/{id}', [HomeScreenController::class, 'getComment']);
                 Route::post('/rate', [HomeScreenController::class, 'rate']);
+                Route::post('/walletPayment', [HomeScreenController::class, 'walletPayment']);
             }
         );
     } else {

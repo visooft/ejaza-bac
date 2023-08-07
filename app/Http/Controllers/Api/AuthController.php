@@ -626,23 +626,23 @@ class AuthController extends Controller
             } else {
                 $total = $totalPrice;
             }
-            if ($request->payment_type == "wallet") {
-                $wallet = $request->user()->wallet;
-                if ($total > $wallet) {
-                    return $this->returnErrorData('data', ['payment_type' => $request->payment_type], __('api.notEnugth'));
-                } else {
-                    $user = $this->userModel::find($request->user()->id);
-                    $user->update([
-                        'wallet' => $user->wallet - $total,
-                    ]);
-                    Wallet::create([
-                        'desc_ar' => 'تم خضم ' . $total . ' ريال سعودي من المحفظة الخاصة بك    ',
-                        'desc_en' => ' has been rival ' . $total . ' SAR from your wallet',
-                        'desc_tr' => ' rakip ' . $total . ' SAR eklendi',
-                        'user_id' => $request->user()->id
-                    ]);
-                }
-            }
+//            if ($request->payment_type == "wallet") {
+//                $wallet = $request->user()->wallet;
+//                if ($total > $wallet) {
+//                    return $this->returnErrorData('data', ['payment_type' => $request->payment_type], __('api.notEnugth'));
+//                } else {
+//                    $user = $this->userModel::find($request->user()->id);
+//                    $user->update([
+//                        'wallet' => $user->wallet - $total,
+//                    ]);
+//                    Wallet::create([
+//                        'desc_ar' => 'تم خضم ' . $total . ' ريال سعودي من المحفظة الخاصة بك    ',
+//                        'desc_en' => ' has been rival ' . $total . ' SAR from your wallet',
+//                        'desc_tr' => ' rakip ' . $total . ' SAR eklendi',
+//                        'user_id' => $request->user()->id
+//                    ]);
+//                }
+//            }
 
             Order::create([
                 'orderNumber' => $randomString,

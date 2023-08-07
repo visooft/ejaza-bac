@@ -1031,18 +1031,19 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
-     public function getComment($id)
-        {
-            try {
-                $comment = Comments::where('housings_id', $id)->get();
-                foreach ($comment as $com) {
-                    $com->user_name = $com->user->name;
-                }
-                return $this->returnData("data", $comment, __('api.successMessage'));
-            } catch (\Exception $e) {
-                return $this->returnError(403, $e->getMessage());
+
+    public function getComment($id)
+    {
+        try {
+            $comment = Comments::where('housings_id', $id)->get();
+            foreach ($comment as $com) {
+                $com->user_name = $com->user->name;
             }
+            return $this->returnData("data", $comment, __('api.successMessage'));
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
         }
+    }
 
     public function rate()
     {
@@ -1063,4 +1064,27 @@ class HomeScreenController extends Controller
             return $this->returnError(403, $e->getMessage());
         }
     }
+
+    public function walletPayment(Request $request)
+    {
+        $lang = $this->returnLang($request);
+        $this->appModel::setLocale($lang);
+        try {
+            $wallet = auth()->user()->wallet;
+            User::update([
+                'wallet' => $wallet - $request->price
+            ]);
+            Wallet::create([
+                'desc_ar' => 'تم خضم ' . $request->price . ' ريال سعودي من المحفظة الخاصة بك    ',
+                'desc_en' => ' has been rival ' . $request->price . ' SAR from your wallet',
+                'desc_tr' => ' rakip ' . $request->price . ' SAR eklendi',
+                'user_id' => auth()->id(),
+            ]);
+
+            return $this->returnSuccessMessage(__('api.successMessage'));
+        } catch (\Exception $e) {
+            return $this->returnError(403, $e->getMessage());
+        }
+    }
+
 }
