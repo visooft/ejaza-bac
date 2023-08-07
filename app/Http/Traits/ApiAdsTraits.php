@@ -31,7 +31,7 @@ trait ApiAdsTraits
                 if ($request->city_id) {
                     if ($request->city_id == "all") {
                         if ($category->id == 6) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                         } elseif ($category->id == 8) {
                             $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                         } else {
@@ -39,7 +39,7 @@ trait ApiAdsTraits
                         }
                     } else {
                         if ($category->id == 6) {
-                            $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                            $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                         } elseif ($category->id == 8) {
                             $ad = $this->houseModel::where(['category_id' => $category->id, 'city_id' => $request->city_id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                         } else {
@@ -48,7 +48,7 @@ trait ApiAdsTraits
                     }
                 } else {
                     if ($category->id == 6) {
-                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->first();
+                        $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->first();
                     } elseif ($category->id == 8) {
                         $ad = $this->houseModel::where(['category_id' => $category->id, 'country_id' => $request->user()->country_id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->first();
                     } else {
@@ -739,7 +739,7 @@ trait ApiAdsTraits
     {
         $category = $this->categoryModel::find($id);
         if ($id == 6) {
-            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+            $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->orderBy('id', 'DESC')->get();
         } elseif ($id == 8) {
             $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
         } else {
@@ -754,7 +754,7 @@ trait ApiAdsTraits
         $category = $this->categoryModel::find($id);
         if (app()->getLocale() == "ar") {
             if ($id == 6) {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
                 $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_ar', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
@@ -762,7 +762,7 @@ trait ApiAdsTraits
             }
         } elseif (app()->getLocale() == "en") {
             if ($id == 6) {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
                 $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_en', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
@@ -770,7 +770,7 @@ trait ApiAdsTraits
             }
         } else {
             if ($id == 6) {
-                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('ticket_count', '!=', '0')->orderBy('id', 'DESC')->get();
+                $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->orderBy('id', 'DESC')->get();
             } elseif ($id == 8) {
                 $ads = $this->houseModel::where(['country_id' => auth()->user()->country_id, 'category_id' => $id, 'show' => 1, 'status' => 1])->where('name_tr', 'LIKE', '%' . $word . '%')->where('passengers', '!=', '0')->orderBy('id', 'DESC')->get();
             } else {
