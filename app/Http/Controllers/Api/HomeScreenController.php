@@ -89,7 +89,7 @@ class HomeScreenController extends Controller
             $cities = $this->getCities($request->user()->country_id);
             if (isset($request->user()->id)) {
                 $data = [];
-                $notifications = Notifications::where(['user_id' => $request->user()->id, 'status' => 1])->get(['id', 'subject', 'message', 'created_at']);
+                $notifications = Notifications::where(['user_id' => $request->user()->id, 'status' => 0])->get(['id', 'subject', 'message', 'created_at']);
                 $notificationsData = Notifications::get(['id', 'subject', 'message', 'created_at']);
                 foreach ($notifications as $notification) {
                     array_push($data, $notification);
