@@ -51,7 +51,7 @@ class ADSCron extends Command
                         $housing->save();
                         Log::info('Order ------>' . $order->id . ' is expired');
                         Log::info('Order Date------>' . $order->to . ' is date');
-                        Log::info('Order Date------>' . $order->to . ' is date');
+                        Log::info('Carbon Date------>' . Carbon::now()->format('Y-n-j') . ' is date');
                         Log::info('Housing ------>' . $housing->id . ' change is_pay from 1 to 0');
                     } else {
                         Log::info('Housing ------>' . $housing->id . ' already is_pay 0');
