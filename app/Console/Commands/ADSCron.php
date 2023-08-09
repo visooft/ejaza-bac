@@ -44,13 +44,12 @@ class ADSCron extends Command
         try {
             $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
             foreach ($orders as $order) {
-                if ($order->to <= Carbon::now()->format('Y-m-d')) {
+                if ($order->to <= Carbon::now()->format('Y-n-j')) {
                     $housing = Housing::whereId($order->housings_id)->first();
                     $housing->is_pay = 0;
                     $housing->save();
                     Log::info('Order ------>' . $order->id . ' is expired');
                     Log::info('Order Date------>' . $order->to . ' is date');
-                    Log::info('Carbon Date------>' . Carbon::now()->format('Y-m-d') . ' is Carbon');
                     Log::info('Housing ------>' . $housing->id . ' change is_pay from 1 to 0');
                 }
             }
