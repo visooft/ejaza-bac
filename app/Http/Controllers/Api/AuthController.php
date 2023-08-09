@@ -600,7 +600,7 @@ class AuthController extends Controller
                     'ticket_count' => $house->ticket_count - $request->count,
                 ]);
             }
-            if ($house->category_id == 3 || $house->category_id == 4 || $house->category_id == 5) {
+            if ($house->category_id == 3 || $house->category_id == 4 || $house->category_id == 5 || $house->category_id == 7) {
                 if ($request->status == 1) {
                     $house->update([
                         'is_pay' => 1,
