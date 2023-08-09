@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Models\Housing;
 use App\Models\Order;
@@ -42,7 +43,7 @@ class ADSCron extends Command
     {
         $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
         foreach ($orders as $order) {
-            if ($order->to == now()) {
+            if ($order->to == Carbon::now()->format('Y-m-d')) {
                 $housing = Housing::whereId($order->housings_id)->first();
                 $housing->is_pay = 0;
                 $housing->save();
