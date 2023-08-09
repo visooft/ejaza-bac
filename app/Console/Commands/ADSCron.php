@@ -40,7 +40,7 @@ class ADSCron extends Command
      */
     public function handle(): void
     {
-        $orders = Order::where(['status' => 0, 'from' => '!=', null, 'to' => '!=', null])->get();
+        $orders = Order::where(['from' => '!=', null, 'to' => '!=', null])->get();
         foreach ($orders as $order) {
             if ($order->to <= now()) {
                 $housing = Housing::whereId($order->housing_id)->first();
