@@ -162,7 +162,7 @@ return [
     'deliveryAddedmessage' => 'تم اضافة المندوب بنجاح',
     'deleteAdsMessage' => 'تم حذف الاعلان بنجاح',
     'updateAdsMessage' => 'تم تحديث بيانات الاعلان بنجاح',
-    'accepetAdsMessage' => 'تم الموافقه علي المطعم بنجاح',
+    'accepetAdsMessage' => 'تم الموافقه بنجاح',
     'accepetDescremetMessage' => 'تم الموافقه علي الطلب بنجاح',
     'rejecetAdsMessage' => 'تم رفض المطعم بنجاح',
     'rejecetDescremetMessage' => 'تم رفض الطلب بنجاح',
