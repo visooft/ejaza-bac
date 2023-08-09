@@ -42,7 +42,7 @@ class ADSCron extends Command
     public function handle(): void
     {
         try {
-            $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
+            $orders = Order::all();
             foreach ($orders as $order) {
                 if ($order->to == Carbon::now()->format('Y-n-j')) {
                     $housing = Housing::whereId($order->housings_id)->first();
