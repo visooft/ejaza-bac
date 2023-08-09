@@ -44,7 +44,7 @@ class ADSCron extends Command
         try {
             $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
             foreach ($orders as $order) {
-                if ($order->to < Carbon::now()->format('Y-m-d')) {
+                if ($order->to <= Carbon::now()->format('Y-m-d')) {
                     $housing = Housing::whereId($order->housings_id)->first();
                     $housing->is_pay = 0;
                     $housing->save();
