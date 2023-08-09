@@ -50,17 +50,14 @@ class ADSCron extends Command
                         $housing->is_pay = 0;
                         $housing->save();
                         Log::info('Order ------>' . $order->id . ' is expired');
-                        Log::info('Order Date------>' . $order->to . ' is date');
-                        Log::info('Carbon Date------>' . Carbon::now()->format('Y-n-j') . ' is date');
-                        Log::info('Housing ------>' . $housing->id . ' change is_pay from 1 to 0');
-                    } else {
-                        Log::info('Housing ------>' . $housing->id . ' already is_pay 0');
+                        Log::info('----------------End ADS:active--------------------');
                     }
                 }
             }
         } catch (\Exception $e) {
             Log::error('Error in ADSCron Command');
             Log::error($e->getMessage());
+            Log::info('----------------End ADS:active--------------------');
         }
     }
 }
