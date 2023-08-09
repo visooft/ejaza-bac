@@ -41,16 +41,22 @@ class ADSCron extends Command
      */
     public function handle(): void
     {
-        $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
-        foreach ($orders as $order) {
-            if ($order->to == Carbon::now()->format('Y-m-d')) {
-                $housing = Housing::whereId($order->housings_id)->first();
-                $housing->is_pay = 0;
-                $housing->save();
-                Log::info('Order ------>' . $order->id . ' is expired');
-                Log::info('Housing ------>' . $housing->id . ' change is_pay from 1 to 0');
-
+        try {
+            $orders = Order::where('from', '!=', null)->where('to', '!=', null)->where('status', 0)->get();
+            foreach ($orders as $order) {
+                if ($order->to < Carbon::now()->format('Y-m-d')) {
+                    $housing = Housing::whereId($order->housings_id)->first();
+                    $housing->is_pay = 0;
+                    $housing->save();
+                    Log::info('Order ------>' . $order->id . ' is expired');
+                    Log::info('Order Date------>' . $order->to . ' is date');
+                    Log::info('Carbon Date------>' . Carbon::now()->format('Y-m-d') . ' is Carbon');
+                    Log::info('Housing ------>' . $housing->id . ' change is_pay from 1 to 0');
+                }
             }
+        } catch (\Exception $e) {
+            Log::error('Error in ADSCron Command');
+            Log::error($e->getMessage());
         }
     }
 }
