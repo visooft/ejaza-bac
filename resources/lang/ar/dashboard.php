@@ -477,7 +477,7 @@ return [
     'hideResturant' => 'إخفاء المطعم',
     'showResturant' => 'إظهار المطعم',
     'deleteResturant' => 'حذف المطعم',
-    'AccepetResturant' => 'تم الموافقه علي المطعم',
+    'AccepetResturant' => 'تم الموافقه',
     'rejecetResturant' => 'تم رفض المطعم',
     'minute' => 'دقيقة',
     'ResturantDetials' => 'تفاصيل المطعم',
