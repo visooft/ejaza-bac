@@ -43,7 +43,7 @@ class ADSCron extends Command
         $orders = Order::where(['from' => '!=', null, 'to' => '!=', null])->get();
         foreach ($orders as $order) {
             if ($order->to <= now()) {
-                $housing = Housing::whereId($order->housing_id)->first();
+                $housing = Housing::whereId($order->housings_id)->first();
                 if ($housing->category_id == [3, 4, 5, 7]) {
                     $housing->is_pay = 0;
                     $housing->save();
