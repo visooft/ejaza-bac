@@ -44,7 +44,7 @@ class ADSCron extends Command
         foreach ($orders as $order) {
             if ($order->to >= now()) {
                 $housing = Housing::whereId($order->housings_id)->where('is_pay', 1)->first();
-                if ($housing->category_id == [3, 4, 5, 7]) {
+                if ($housing->category_id == 3 || $housing->category_id == 4 || $housing->category_id == 5 || $housing->category_id == 7) {
                     $housing->is_pay = 0;
                     $housing->save();
                     Log::info('Order ------>' . $order->id . ' is expired');
