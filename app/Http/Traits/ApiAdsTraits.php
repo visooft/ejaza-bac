@@ -11,13 +11,17 @@ use App\Models\Streets;
 use App\Models\travelType;
 use App\Models\travelCountry;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Order;
 use Stichoza\GoogleTranslate\GoogleTranslate;
+use Translate;
 
 trait ApiAdsTraits
 {
     public $rate;
 
+    /**
+     * @throws \ErrorException
+     */
     public function getAdsByCity($request)
     {
         $user_id = $request->user()->id;
@@ -107,7 +111,7 @@ trait ApiAdsTraits
                     if ($commenets) {
                         foreach ($commenets as $index => $commenet) {
                             $commentsData[$index]["name"] = $commenet->user->name;
-                            $commentsData[$index]["commenet"] = $commenet->commenet;
+                            $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                             $commentsData[$index]["rate"] = $commenet->rate;
                             $commentsData[$index]["created_at"] = $commenet->created_at;
                         }
@@ -115,7 +119,7 @@ trait ApiAdsTraits
                     $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $request->user()->id])->first();
                     $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                     foreach ($images as $image) {
-                        $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                        $image->image = asset('Admin/images/ads/' . $image->image);
                     }
                     $terms = $this->termModel::where('housings_id', $ad->id)->get();
                     $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -164,7 +168,7 @@ trait ApiAdsTraits
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                     if ($ad->street_id) {
                         $data[$key]["street_id"] = $ad->street_id;
-                        $data[$key]["street_name"] = $ad->street->name_ar;
+                        $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                     } else {
                         $data[$key]["street_id"] = "";
                         $data[$key]["street_name"] = "";
@@ -188,10 +192,10 @@ trait ApiAdsTraits
                     ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
                     ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                     $data[$key]["city"] = $ad->cityName;
-                    $data[$key]["AdsOwner"] = $ad->user->name;
-                    ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                    ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                    ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                    $data[$key]["AdsOwner"] = $ad->user->name ?? '';
+                    ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                    ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                    ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                     $data[$key]["token"] = $ad->user->token;
                     $data[$key]["commenets"] = $commentsData;
                     $data[$key]["images"] = $images;
@@ -223,14 +227,26 @@ trait ApiAdsTraits
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
-                    $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                    $data[$key]["travel_name"] = Translate::trans($ad->travel_name);
+                    if ($ad->is_pay == 1) {
+                        $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                        foreach ($orders as $order) {
+                            $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                            $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                        }
+                        $data[$key]["orders"] = $orders;
+                    }
+                    $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                     $rate = Rate::where('housings_id', $ad->id)->get();
                     $data[$key]["rate"] = Rate::where('housings_id', $ad->id)->avg('rate');
                     $data[$key]["rate_count"] = count($rate);
                     $data[$key]["rate_users"] = $rate;
+                    ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                     $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["moodle"] = $ad->moodle ?? "";
+
                     $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
@@ -254,7 +270,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -274,6 +290,9 @@ trait ApiAdsTraits
         return $data;
     }
 
+    /**
+     * @throws \ErrorException
+     */
     public function getAdsUsercurrent($request)
     {
         $tr = new GoogleTranslate('tr');
@@ -334,7 +353,7 @@ trait ApiAdsTraits
                     if ($commenets) {
                         foreach ($commenets as $index => $commenet) {
                             $commentsData[$index]["name"] = $commenet->user->name;
-                            $commentsData[$index]["commenet"] = $commenet->commenet;
+                            $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                             $commentsData[$index]["rate"] = $commenet->rate;
                             $commentsData[$index]["created_at"] = $commenet->created_at;
                         }
@@ -342,7 +361,7 @@ trait ApiAdsTraits
                     $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $request->user()->id])->first();
                     $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                     foreach ($images as $image) {
-                        $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                        $image->image = asset('Admin/images/ads/' . $image->image);
                     }
                     $terms = $this->termModel::where('housings_id', $ad->id)->get();
                     $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -391,7 +410,7 @@ trait ApiAdsTraits
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                     if ($ad->street_id) {
                         $data[$key]["street_id"] = $ad->street_id;
-                        $data[$key]["street_name"] = $ad->street->name_ar;
+                        $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                     } else {
                         $data[$key]["street_id"] = "";
                         $data[$key]["street_name"] = "";
@@ -415,10 +434,10 @@ trait ApiAdsTraits
                     ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
                     ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                     $data[$key]["city"] = $ad->cityName;
-                    $data[$key]["AdsOwner"] = $ad->user->name;
-                    ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                    ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                    ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                    $data[$key]["AdsOwner"] = $ad->user->name ?? '';
+                    ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                    ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                    ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                     $data[$key]["token"] = $ad->user->token;
                     $data[$key]["commenets"] = $commentsData;
                     $data[$key]["images"] = $images;
@@ -447,11 +466,22 @@ trait ApiAdsTraits
                     $data[$key]["camp"] = $detials->camp;
                     $data[$key]["chalets"] = $detials->chalets;
                     $data[$key]["dinner"] = $detials->dinner;
+                    ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                    if ($ad->is_pay == 1) {
+                        $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                        foreach ($orders as $order) {
+                            $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                            $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                        }
+                        $data[$key]["orders"] = $orders;
+
+                    }
+                    $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                     $rate = Rate::where('housings_id', $ad->id)->get();
                     foreach ($rate as $r) {
                         $this->rate += $r->rate;
@@ -465,6 +495,8 @@ trait ApiAdsTraits
                     $data[$key]["rate_users"] = $rate;
                     $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["moodle"] = $ad->moodle ?? "";
+
                     $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                     $data[$key]["is_pay"] = $ad->is_pay;
                     ($ad->passengers) ? $data[$key]["passengers"] = $ad->passengers : $data[$key]["passengers"] = "";
@@ -484,7 +516,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -564,7 +596,7 @@ trait ApiAdsTraits
                     if ($commenets) {
                         foreach ($commenets as $index => $commenet) {
                             $commentsData[$index]["name"] = $commenet->user->name;
-                            $commentsData[$index]["commenet"] = $commenet->commenet;
+                            $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                             $commentsData[$index]["rate"] = $commenet->rate;
                             $commentsData[$index]["created_at"] = $commenet->created_at;
                         }
@@ -572,7 +604,7 @@ trait ApiAdsTraits
                     $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $request->user()->id])->first();
                     $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                     foreach ($images as $image) {
-                        $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                        $image->image = asset('Admin/images/ads/' . $image->image);
                     }
                     $terms = $this->termModel::where('housings_id', $ad->id)->get();
                     $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -621,7 +653,7 @@ trait ApiAdsTraits
                     ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                     if ($ad->street_id) {
                         $data[$key]["street_id"] = $ad->street_id;
-                        $data[$key]["street_name"] = $ad->street->name_ar;
+                        $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                     } else {
                         $data[$key]["street_id"] = "";
                         $data[$key]["street_name"] = "";
@@ -645,10 +677,21 @@ trait ApiAdsTraits
                     ($ad->lat) ? $data[$key]["lat"] = $ad->lat : $data[$key]["lat"] = "";
                     ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                     $data[$key]["city"] = $ad->cityName;
-                    $data[$key]["AdsOwner"] = $ad->user->name;
-                    ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                    ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                    ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                    $data[$key]["AdsOwner"] = $ad->user->name ?? '';
+                    ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                    ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                    ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
+                    $order = Order::where('housings_id', $ad->id)->where('user_id', $request->user()->id)->first();
+                    if ($order) {
+                        $data[$key]["lat"] = $order->lat ?? "";
+                        $data[$key]["long"] = $order->long ?? "";
+                        $data[$key]["order_address"] = $order->address ?? "";
+                    } else {
+                        $data[$key]["lat"] = "";
+                        $data[$key]["long"] = "";
+                        $data[$key]["order_address"] = "";
+                    }
+
                     $data[$key]["token"] = $ad->user->token;
                     $data[$key]["commenets"] = $commentsData;
                     $data[$key]["images"] = $images;
@@ -677,11 +720,22 @@ trait ApiAdsTraits
                     $data[$key]["dinner"] = $detials->dinner;
                     $data[$key]["camp"] = $detials->camp;
                     $data[$key]["chalets"] = $detials->chalets;
+                    ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
                     $data[$key]["travel_name"] = $ad->travel_name;
-                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                    if ($ad->is_pay == 1) {
+                        $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                        foreach ($orders as $order) {
+                            $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                            $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                        }
+                        $data[$key]["orders"] = $orders;
+
+                    }
+                    $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                    $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                     $rate = Rate::where('housings_id', $ad->id)->get();
                     foreach ($rate as $r) {
                         $this->rate += $r->rate;
@@ -695,6 +749,8 @@ trait ApiAdsTraits
                     $data[$key]["rate_users"] = $rate;
                     $data[$key]["to_hours"] = $ad->to_hours;
                     $data[$key]["from_hours"] = $ad->from_hours;
+                    $data[$key]["moodle"] = $ad->moodle ?? "";
+
                     $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
 
                     $data[$key]["is_pay"] = $ad->is_pay;
@@ -715,7 +771,7 @@ trait ApiAdsTraits
                     $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                     if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                         $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                        $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                        $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                     } else {
                         $data[$key]["rate"] = "0";
@@ -850,7 +906,7 @@ trait ApiAdsTraits
                 if ($commenets) {
                     foreach ($commenets as $index => $commenet) {
                         $commentsData[$index]["name"] = $commenet->user->name;
-                        $commentsData[$index]["commenet"] = $commenet->commenet;
+                        $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                         $commentsData[$index]["rate"] = $commenet->rate;
                         $commentsData[$index]["created_at"] = $commenet->created_at;
                     }
@@ -858,7 +914,7 @@ trait ApiAdsTraits
                 $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $user_id])->first();
                 $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                 foreach ($images as $image) {
-                    $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                    $image->image = asset('Admin/images/ads/' . $image->image);
                 }
                 $terms = $this->termModel::where('housings_id', $ad->id)->get();
                 $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -907,7 +963,7 @@ trait ApiAdsTraits
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                 if ($ad->street_id) {
                     $data[$key]["street_id"] = $ad->street_id;
-                    $data[$key]["street_name"] = $ad->street->name_ar;
+                    $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                 } else {
                     $data[$key]["street_id"] = "";
                     $data[$key]["street_name"] = "";
@@ -935,13 +991,14 @@ trait ApiAdsTraits
                 ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
-                ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                 $data[$key]["token"] = $ad->user->token;
                 $data[$key]["commenets"] = $commentsData;
                 $data[$key]["images"] = $images;
                 $data[$key]["terms"] = $termData;
+                $data[$key]["moodle"] = $ad->moodle ?? "";
                 $data[$key]["families"] = $detials->families;
                 $data[$key]["insurance"] = $detials->insurance;
                 $data[$key]["private_house"] = $detials->private_house;
@@ -963,6 +1020,7 @@ trait ApiAdsTraits
                 $data[$key]["Tour_guide_included"] = $detials->Tour_guide_included;
                 $data[$key]["breakfast"] = $detials->breakfast;
                 $data[$key]["lunch"] = $detials->lunch;
+                ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                 $data[$key]["dinner"] = $detials->dinner;
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
@@ -970,7 +1028,17 @@ trait ApiAdsTraits
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                if ($ad->is_pay == 1) {
+                    $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                    foreach ($orders as $order) {
+                        $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                        $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                    }
+                    $data[$key]["orders"] = $orders;
+
+                }
+                $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                 $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $data[$key]["is_pay"] = $ad->is_pay;
                 $rate = Rate::where('housings_id', $ad->id)->get();
@@ -1007,7 +1075,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1086,14 +1154,14 @@ trait ApiAdsTraits
                 if ($commenets) {
                     foreach ($commenets as $index => $commenet) {
                         $commentsData[$index]["name"] = $commenet->user->name;
-                        $commentsData[$index]["commenet"] = $commenet->commenet;
+                        $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                         $commentsData[$index]["rate"] = $commenet->rate;
                         $commentsData[$index]["created_at"] = $commenet->created_at;
                     }
                 }
                 $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                 foreach ($images as $image) {
-                    $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                    $image->image = asset('Admin/images/ads/' . $image->image);
                 }
                 $terms = $this->termModel::where('housings_id', $ad->id)->get();
                 $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -1142,7 +1210,7 @@ trait ApiAdsTraits
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                 if ($ad->street_id) {
                     $data[$key]["street_id"] = $ad->street_id;
-                    $data[$key]["street_name"] = $ad->street->name_ar;
+                    $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                 } else {
                     $data[$key]["street_id"] = "";
                     $data[$key]["street_name"] = "";
@@ -1167,14 +1235,15 @@ trait ApiAdsTraits
                 ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
-                ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                 $data[$key]["token"] = $ad->user->token;
                 $data[$key]["commenets"] = $commentsData;
                 $data[$key]["images"] = $images;
                 $data[$key]["terms"] = $termData;
                 $data[$key]["families"] = $detials->families;
+                $data[$key]["moodle"] = $ad->moodle ?? "";
                 $data[$key]["insurance"] = $detials->insurance;
                 $data[$key]["private_house"] = $detials->private_house;
                 $data[$key]["Shared_accommodation"] = $detials->Shared_accommodation;
@@ -1201,9 +1270,20 @@ trait ApiAdsTraits
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["is_pay"] = $ad->is_pay;
+                if ($ad->is_pay == 1) {
+                    $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                    foreach ($orders as $order) {
+                        $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                        $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                    }
+                    $data[$key]["orders"] = $orders;
+
+                }
+                ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                 $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 foreach ($rate as $r) {
@@ -1235,7 +1315,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1315,7 +1395,7 @@ trait ApiAdsTraits
                 if ($commenets) {
                     foreach ($commenets as $index => $commenet) {
                         $commentsData[$index]["name"] = $commenet->user->name;
-                        $commentsData[$index]["commenet"] = $commenet->commenet;
+                        $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                         $commentsData[$index]["rate"] = $commenet->rate;
                         $commentsData[$index]["created_at"] = $commenet->created_at;
                     }
@@ -1323,7 +1403,7 @@ trait ApiAdsTraits
                 $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $user_id])->first();
                 $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                 foreach ($images as $image) {
-                    $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                    $image->image = asset('Admin/images/ads/' . $image->image);
                 }
                 $terms = $this->termModel::where('housings_id', $ad->id)->get();
                 $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -1372,7 +1452,7 @@ trait ApiAdsTraits
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                 if ($ad->street_id) {
                     $data[$key]["street_id"] = $ad->street_id;
-                    $data[$key]["street_name"] = $ad->street->name_ar;
+                    $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                 } else {
                     $data[$key]["street_id"] = "";
                     $data[$key]["street_name"] = "";
@@ -1380,11 +1460,11 @@ trait ApiAdsTraits
                 ($ad->license_number) ? $data[$key]["license_number"] = $ad->license_number : $data[$key]["license_number"] = "";
                 $data[$key]["payment_type"] = __('api.' . $order->payment_type);
                 if ($order->payment_type == "cash") {
-                    $data[$key]["payment_icon"] = env('APP_URL') . "Admin/images/cash.png";
+                    $data[$key]["payment_icon"] = asset("Admin/images/cash.png");
                 } elseif ($order->payment_type == "wallet") {
-                    $data[$key]["payment_icon"] = env('APP_URL') . "Admin/images/wallet.png";
+                    $data[$key]["payment_icon"] = asset("Admin/images/wallet.png");
                 } else {
-                    $data[$key]["payment_icon"] = env('APP_URL') . "Admin/images/online.png";
+                    $data[$key]["payment_icon"] = asset("Admin/images/online.png");
                 }
                 $data[$key]["categoryName"] = $category->name;
                 $data[$key]["category_id"] = $category->id;
@@ -1404,15 +1484,16 @@ trait ApiAdsTraits
                 ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
-                ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                 $data[$key]["token"] = $ad->user->token;
                 $data[$key]["commenets"] = $commentsData;
                 $data[$key]["images"] = $images;
                 $data[$key]["terms"] = $termData;
                 $data[$key]["families"] = $detials->families;
                 $data[$key]["insurance"] = $detials->insurance;
+                $data[$key]["moodle"] = $ad->moodle ?? "";
                 $data[$key]["private_house"] = $detials->private_house;
                 $data[$key]["Shared_accommodation"] = $detials->Shared_accommodation;
                 $data[$key]["animals"] = $detials->animals;
@@ -1438,9 +1519,20 @@ trait ApiAdsTraits
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["is_pay"] = $ad->is_pay;
                 $data[$key]["back"] = $ad->back;
+                if ($ad->is_pay == 1) {
+                    $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                    foreach ($orders as $order) {
+                        $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                        $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                    }
+                    $data[$key]["orders"] = $orders;
+
+                }
+                ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                 $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $rate = Rate::where('housings_id', $ad->id)->get();
                 $data[$key]["to_hours"] = $ad->to_hours;
@@ -1476,7 +1568,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1562,7 +1654,7 @@ trait ApiAdsTraits
                 if ($commenets) {
                     foreach ($commenets as $index => $commenet) {
                         $commentsData[$index]["name"] = $commenet->user->name;
-                        $commentsData[$index]["commenet"] = $commenet->commenet;
+                        $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                         $commentsData[$index]["rate"] = $commenet->rate;
                         $commentsData[$index]["created_at"] = $commenet->created_at;
                     }
@@ -1570,7 +1662,7 @@ trait ApiAdsTraits
                 $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $user_id])->first();
                 $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                 foreach ($images as $image) {
-                    $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                    $image->image = asset('Admin/images/ads/' . $image->image);
                 }
                 $terms = $this->termModel::where('housings_id', $ad->id)->get();
                 $detials = $this->detialModel::where('housings_id', $ad->id)->first();
@@ -1619,7 +1711,7 @@ trait ApiAdsTraits
                 ($ad->area) ? $data[$key]["area"] = $ad->area : $data[$key]["area"] = "";
                 if ($ad->street_id) {
                     $data[$key]["street_id"] = $ad->street_id;
-                    $data[$key]["street_name"] = $ad->street->name_ar;
+                    $data[$key]["street_name"] = Translate::trans($ad->street->name_ar);
                 } else {
                     $data[$key]["street_id"] = "";
                     $data[$key]["street_name"] = "";
@@ -1644,9 +1736,9 @@ trait ApiAdsTraits
                 ($ad->long) ? $data[$key]["long"] = $ad->long : $data[$key]["long"] = "";
                 $data[$key]["city"] = $ad->cityName;
                 $data[$key]["AdsOwner"] = $ad->user->name;
-                ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                 $data[$key]["token"] = $ad->user->token;
                 $data[$key]["commenets"] = $commentsData;
                 $data[$key]["images"] = $images;
@@ -1655,6 +1747,7 @@ trait ApiAdsTraits
                 $data[$key]["insurance"] = $detials->insurance;
                 $data[$key]["private_house"] = $detials->private_house;
                 $data[$key]["Shared_accommodation"] = $detials->Shared_accommodation;
+                $data[$key]["moodle"] = $ad->moodle ?? "";
                 $data[$key]["animals"] = $detials->animals;
                 $data[$key]["visits"] = $detials->visits;
                 $data[$key]["group_travel"] = $ad->group_travel;
@@ -1675,11 +1768,22 @@ trait ApiAdsTraits
                 $data[$key]["dinner"] = $detials->dinner;
                 $data[$key]["camp"] = $detials->camp;
                 $data[$key]["chalets"] = $detials->chalets;
+                if ($ad->is_pay == 1) {
+                    $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
+                    foreach ($orders as $order) {
+                        $order->from = date('Y-m-d', strtotime($order->from . ' - 1 days'));
+                        $order->to = date('Y-m-d', strtotime($order->to . ' + 1 days'));
+                    }
+                    $data[$key]["orders"] = $orders;
+
+                }
+                ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
                 $data[$key]["go"] = $ad->go;
                 $data[$key]["back"] = $ad->back;
                 $data[$key]["count_days"] = $ad->count_days;
                 $data[$key]["travel_name"] = $ad->travel_name;
-                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_name"] = User::where('id', $ad->user_id)->first()->name;
+                $data[$key]["ads_user_id"] = User::where('id', $ad->user_id)->first()->id;
                 $data[$key]["documentation"] = User::where('id', $ad->user_id)->first()->documentation;
                 $data[$key]["to_hours"] = $ad->to_hours;
                 $data[$key]["from_hours"] = $ad->from_hours;
@@ -1716,7 +1820,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";
@@ -1771,6 +1875,9 @@ trait ApiAdsTraits
         return $dataCategory;
     }
 
+    /**
+     * @throws \ErrorException
+     */
     public function tourGuideAds($request)
     {
         $tr = new GoogleTranslate('tr');
@@ -1805,7 +1912,7 @@ trait ApiAdsTraits
                 if ($commenets) {
                     foreach ($commenets as $index => $commenet) {
                         $commentsData[$index]["name"] = $commenet->user->name;
-                        $commentsData[$index]["commenet"] = $commenet->commenet;
+                        $commentsData[$index]["commenet"] = Translate::trans($commenet->commenet);
                         $commentsData[$index]["rate"] = $commenet->rate;
                         $commentsData[$index]["created_at"] = $commenet->created_at;
                     }
@@ -1813,7 +1920,7 @@ trait ApiAdsTraits
                 $favourite = $this->favouriteModel::where(['housings_id' => $ad->id, 'user_id' => $request->user()->id])->first();
                 $images = $this->imageModel::where('housings_id', $ad->id)->get(['image']);
                 foreach ($images as $image) {
-                    $image->image = env('APP_URL') . 'Admin/images/ads/' . $image->image;
+                    $image->image = asset('Admin/images/ads/' . $image->image);
                 }
                 $terms = $this->termModel::where('housings_id', $ad->id)->get();
                 $termData = [];
@@ -1845,11 +1952,13 @@ trait ApiAdsTraits
                 }
                 $data[$key]["moodle"] = $ad->moodle;
                 $data[$key]["city"] = $ad->cityName;
+                $data[$key]["is_pay"] = $ad->is_pay;
+                $data[$key]["ads_user_id"] = $ad->user_id;
                 $data[$key]["AdsOwner"] = $ad->user->name;
-                ($ad->guide_image) ? $data[$key]["guide_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->guide_image : $data[$key]["guide_image"] = env('APP_URL') . 'Admin/images/users/01.png';
-                ($ad->national_image) ? $data[$key]["national_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->national_image : $data[$key]["national_image"] = "";
-                ($ad->license_image) ? $data[$key]["license_image"] = env('APP_URL') . 'Admin/images/ads/' . $ad->license_image : $data[$key]["license_image"] = "";
-                ($ad->user->image) ? $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/' . $ad->user->image : $data[$key]["sellerImage"] = env('APP_URL') . 'Admin/images/users/01.png';
+                ($ad->guide_image) ? $data[$key]["guide_image"] = asset('Admin/images/ads/' . $ad->guide_image) : $data[$key]["guide_image"] = asset('Admin/images/users/01.png');
+                ($ad->national_image) ? $data[$key]["national_image"] = asset('Admin/images/ads/' . $ad->national_image) : $data[$key]["national_image"] = "";
+                ($ad->license_image) ? $data[$key]["license_image"] = asset('Admin/images/ads/' . $ad->license_image) : $data[$key]["license_image"] = "";
+                ($ad->user->image) ? $data[$key]["sellerImage"] = asset('Admin/images/users/' . $ad->user->image) : $data[$key]["sellerImage"] = asset('Admin/images/users/01.png');
                 $data[$key]["token"] = $ad->user->token;
                 $data[$key]["commenets"] = $commentsData;
                 $data[$key]["images"] = $images;
@@ -1872,7 +1981,7 @@ trait ApiAdsTraits
                 $data[$key]["date"] = $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->isoFormat('HH:MM a') . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->dayName . ', ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->day . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->monthName . ' ' . $this->carbonModel::createFromTimeStamp(strtotime($ad->created_at))->locale(app()->getLocale())->year;
                 if ($this->commenetModel::where('housings_id', $ad->id)->avg('rate')) {
                     $data[$key]["rate"] = $this->commenetModel::where('housings_id', $ad->id)->avg('rate');
-                    $data[$key]["commenetCounts"] = (string)$this->commenetModel::where('housings_id', $ad->id)->count();
+                    $data[$key]["commenetCounts"] = (string) $this->commenetModel::where('housings_id', $ad->id)->count();
 
                 } else {
                     $data[$key]["rate"] = "0";

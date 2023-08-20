@@ -22,17 +22,17 @@
         </div>
         <div class="iq-header-img">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header.png') }}" alt="header"
-                class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header1.png') }}" alt="header"
-                class="theme-color-purple-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-purple-img img-fluid w-100 h-100 animated-scaleX">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header2.png') }}" alt="header"
-                class="theme-color-blue-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-blue-img img-fluid w-100 h-100 animated-scaleX">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header3.png') }}" alt="header"
-                class="theme-color-green-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-green-img img-fluid w-100 h-100 animated-scaleX">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header4.png') }}" alt="header"
-                class="theme-color-yellow-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-yellow-img img-fluid w-100 h-100 animated-scaleX">
             <img src="{{ asset('Admin/assets/images/dashboard/top-header5.png') }}" alt="header"
-                class="theme-color-pink-img img-fluid w-100 h-100 animated-scaleX">
+                 class="theme-color-pink-img img-fluid w-100 h-100 animated-scaleX">
         </div>
     </div>
     <div class="conatiner-fluid content-inner mt-n5 py-0">
@@ -46,73 +46,73 @@
                             <div class="table-responsive">
                                 <table id="user-list-table" class="table table-striped" role="grid">
                                     <thead>
-                                        <tr class="ligth">
-                                            <th>{{ __('dashboard.#') }}</th>
-                                            <th>{{ __('dashboard.image') }}</th>
-                                            <th>{{ __('dashboard.name') }}</th>
-                                            <th style="min-width: 300px">{{ __('dashboard.desc') }}</th>
-                                            <th>القسم</th>
-                                            <th>المساحة</th>
-                                            <th>السعر</th>
-                                            <th>المدينة</th>
-                                            <th>الشارع</th>
-                                            <th>صاحب الاعلان</th>
-                                            <th>{{ __('dashboard.changeStatus') }}</th>
-                                            <th style="min-width: 100px">{{ __('dashboard.action') }}</th>
-                                        </tr>
+                                    <tr class="ligth">
+                                        <th>{{ __('dashboard.#') }}</th>
+                                        <th>{{ __('dashboard.image') }}</th>
+                                        <th>{{ __('dashboard.name') }}</th>
+                                        <th style="min-width: 300px">{{ __('dashboard.desc') }}</th>
+                                        <th>القسم</th>
+                                        <th>المساحة</th>
+                                        <th>السعر</th>
+                                        <th>المدينة</th>
+                                        <th>الشارع</th>
+                                        <th>صاحب الاعلان</th>
+                                        <th>{{ __('dashboard.changeStatus') }}</th>
+                                        <th style="min-width: 100px">{{ __('dashboard.action') }}</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($ads as $key => $ad)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td class="text-center"><img
-                                                        class="bg-soft-primary rounded img-fluid avatar-40 me-3"
-                                                        src="{{ $ad->image }}" alt="Category"></td>
-                                                <td>
-                                                    <a href="{{ route('getDetials', $ad->id) }}">
-                                                        {{ $ad->name_ar }}
-                                                    </a>
-                                                </td>
-                                                <td style="white-space: pre-wrap;">{{ $ad->desc_ar }}</td>
-                                                <td>{{ $ad->category->name_ar }}</td>
-                                                <td>{{ $ad->area }}</td>
-                                                <td>{{ $ad->price }}</td>
-                                                <td>{{ ($ad->city) ? $ad->city->name_ar : "" }}</td>
-                                                <td>{{ ($ad->street) ? $ad->street->name_ar : "" }}</td>
-                                                <td>{{ $ad->user->name }}</td>
-                                                <td>
-                                                    @if ($status == 0)
-                                                        <a href="{{ route('accepetResturant', $ad->id) }}"
-                                                            class="btn btn-success">{{ __('dashboard.Accepet') }}</a>
-                                                        <a href="{{ route('rejecetResturant', $ad->id) }}"
-                                                            class="btn btn-danger">{{ __('dashboard.rejecet') }}</a>
-                                                    @elseif ($status == 1)
-                                                        <a
-                                                            class="btn btn-success">{{ __('dashboard.AccepetResturant') }}</a>
-                                                    @elseif ($status == 2)
-                                                        <a
-                                                            class="btn btn-danger">{{ __('dashboard.rejecetResturant') }}</a>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="flex align-items-center list-user-action">
+                                    @foreach ($ads as $key => $ad)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td class="text-center"><img
+                                                    class="bg-soft-primary rounded img-fluid avatar-40 me-3"
+                                                    src="{{ $ad->image }}" alt="Category"></td>
+                                            <td>
+                                                <a href="{{ route('getDetials', $ad->id) }}">
+                                                    {{ $ad->name_ar }}
+                                                </a>
+                                            </td>
+                                            <td style="white-space: pre-wrap;">{{ $ad->desc_ar }}</td>
+                                            <td>{{ $ad->category->name_ar }}</td>
+                                            <td>{{ $ad->area }}</td>
+                                            <td>{{ $ad->price }}</td>
+                                            <td>{{ ($ad->city) ? $ad->city->name_ar : "" }}</td>
+                                            <td>{{ ($ad->street) ? $ad->street->name_ar : "" }}</td>
+                                            <td>{{ $ad->user->name }}</td>
+                                            <td>
+                                                @if ($status == 0)
+                                                    <a href="{{ route('accepetResturant', $ad->id) }}"
+                                                       class="btn btn-success">{{ __('dashboard.Accepet') }}</a>
+                                                    <a href="{{ route('rejecetResturant', $ad->id) }}"
+                                                       class="btn btn-danger">{{ __('dashboard.rejecet') }}</a>
+                                                @elseif ($status == 1)
+                                                    <a
+                                                        class="btn btn-success">{{ __('dashboard.AccepetResturant') }}</a>
+                                                @elseif ($status == 2)
+                                                    <a
+                                                        class="btn btn-danger">{{ __('dashboard.rejecetResturant') }}</a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="flex align-items-center list-user-action">
 
-                                                        <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="modal"
-                                                            data-placement="top" title="" data-original-title="Delete"
-                                                            onclick="myFunction(this, '{{ $ad->id }}','delete')"
-                                                            href="#deleteModal">
+                                                    <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="modal"
+                                                       data-placement="top" title="" data-original-title="Delete"
+                                                       onclick="myFunction(this, '{{ $ad->id }}','delete')"
+                                                       href="#deleteModal">
                                                             <span class="btn-inner">
                                                                 <svg width="20" viewBox="0 0 24 24" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    stroke="currentColor">
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     stroke="currentColor">
                                                                     <path
                                                                         d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826"
                                                                         stroke="currentColor" stroke-width="1.5"
                                                                         stroke-linecap="round" stroke-linejoin="round">
                                                                     </path>
                                                                     <path d="M20.708 6.23975H3.75" stroke="currentColor"
-                                                                        stroke-width="1.5" stroke-linecap="round"
-                                                                        stroke-linejoin="round"></path>
+                                                                          stroke-width="1.5" stroke-linecap="round"
+                                                                          stroke-linejoin="round"></path>
                                                                     <path
                                                                         d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -120,37 +120,37 @@
                                                                     </path>
                                                                 </svg>
                                                             </span>
-                                                        </a>
-                                                        @if ($status == 1)
-                                                            @if ($ad->show == 1)
-                                                                <a class="btn btn-sm btn-icon"
-                                                                    style="background-color:#3a57e8" data-bs-toggle="modal"
-                                                                    data-placement="top" title=""
-                                                                    data-original-title="hide"
-                                                                    onclick="myFunction(this, '{{ $ad->id }}','hide')"
-                                                                    href="#hidecategory">
+                                                    </a>
+                                                    @if ($status == 1)
+                                                        @if ($ad->show == 1)
+                                                            <a class="btn btn-sm btn-icon"
+                                                               style="background-color:#3a57e8" data-bs-toggle="modal"
+                                                               data-placement="top" title=""
+                                                               data-original-title="hide"
+                                                               onclick="myFunction(this, '{{ $ad->id }}','hide')"
+                                                               href="#hidecategory">
                                                                     <span class="btn-inner">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24">
+                                                                             width="24" height="24"
+                                                                             viewBox="0 0 24 24">
                                                                             <path
-                                                                                d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                                                                                d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
                                                                         </svg>
                                                                     </span>
-                                                                </a>
-                                                            @else
-                                                                <a class="btn btn-sm btn-icon"
-                                                                    style="background-color:#3a57e8" data-bs-toggle="modal"
-                                                                    data-placement="top" title=""
-                                                                    data-original-title="show"
-                                                                    onclick="myFunction(this, '{{ $ad->id }}','show')"
-                                                                    href="#showcategory">
+                                                            </a>
+                                                        @else
+                                                            <a class="btn btn-sm btn-icon"
+                                                               style="background-color:#3a57e8" data-bs-toggle="modal"
+                                                               data-placement="top" title=""
+                                                               data-original-title="show"
+                                                               onclick="myFunction(this, '{{ $ad->id }}','show')"
+                                                               href="#showcategory">
                                                                     <span class="btn-inner">
                                                                         <svg style="color: rgb(0, 0, 0);"
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-eye-slash"
-                                                                            viewBox="0 0 16 16">
+                                                                             xmlns="http://www.w3.org/2000/svg"
+                                                                             width="16" height="16"
+                                                                             fill="currentColor" class="bi bi-eye-slash"
+                                                                             viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"
                                                                                 fill="#000000"></path>
@@ -162,16 +162,15 @@
                                                                                 fill="#000000"></path>
                                                                         </svg>
                                                                     </span>
-                                                                </a>
-                                                            @endif
+                                                            </a>
                                                         @endif
+                                                    @endif
 
 
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 <div>
@@ -199,9 +198,9 @@
                             <input id="categoryIdDelete" name="resturantId" type="hidden" class="form-control">
                         </form>
                         <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
+                                data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
                         <button form="delete-form" type="submit"
-                            class="btn btn-primary">{{ __('dashboard.delete') }}</button>
+                                class="btn btn-primary">{{ __('dashboard.delete') }}</button>
                     </div>
                 </div>
             </div>
@@ -221,9 +220,9 @@
                             <input id="categoryIdShow" name="resturantId" type="hidden" class="form-control">
                         </form>
                         <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
+                                data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
                         <button form="show-form" type="submit"
-                            class="btn btn-primary">{{ __('dashboard.show') }}</button>
+                                class="btn btn-primary">{{ __('dashboard.show') }}</button>
                     </div>
                 </div>
             </div>
@@ -243,9 +242,9 @@
                             <input id="categoryIdHide" name="resturantId" type="hidden" class="form-control">
                         </form>
                         <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
+                                data-bs-dismiss="modal">{{ __('dashboard.close') }}</button>
                         <button form="hide-form" type="submit"
-                            class="btn btn-primary">{{ __('dashboard.hide') }}</button>
+                                class="btn btn-primary">{{ __('dashboard.hide') }}</button>
                     </div>
                 </div>
             </div>
@@ -267,4 +266,4 @@
                 }
             }
         </script>
-    @endsection
+@endsection

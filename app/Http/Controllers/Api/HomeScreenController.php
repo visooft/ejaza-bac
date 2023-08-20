@@ -364,6 +364,7 @@ class HomeScreenController extends Controller
                 'national_image' => $national_image,
                 'license_image' => $license_image,
                 'guide_image' => $guide_image,
+                'license_number' => $request->license_number,
                 'language_id' => $request->language_id,
                 'event_name' => $request->event_name,
                 'event_name_en' => $event_name_en,
@@ -817,7 +818,7 @@ class HomeScreenController extends Controller
             if ($commenets) {
                 foreach ($commenets as $index => $commenet) {
                     if ($commenet->user->image) {
-                        $image = env('APP_URL') . "Admin/images/users/" . $commenet->user->image;
+                        $image = asset("Admin/images/users/" . $commenet->user->image);
                     } else {
                         $image = "https://ui-avatars.com/api/?name=" . $commenet->user->name;
                     }

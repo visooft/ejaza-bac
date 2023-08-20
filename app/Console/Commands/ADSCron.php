@@ -49,13 +49,15 @@ class ADSCron extends Command
                     if ($housing->is_pay == 1) {
                         $housing->is_pay = 0;
                         $housing->save();
+                        $order->status = 1;
+                        Log::info('----------------Start ADS:active--------------------');
                         Log::info('Order ------>' . $order->id . ' is expired');
                         Log::info('----------------End ADS:active--------------------');
                     }
                 }
             }
         } catch (\Exception $e) {
-            Log::error('Error in ADSCron Command');
+            Log::error('----------------Start ADS:active--------------------');
             Log::error($e->getMessage());
             Log::info('----------------End ADS:active--------------------');
         }

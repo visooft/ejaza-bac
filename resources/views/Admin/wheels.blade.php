@@ -65,10 +65,10 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>
-                                                    @if ($wheel->key == "money")
-                                                    قيمة مالية
+                                                    @if ($wheel->key == 'money')
+                                                        قيمة مالية
                                                     @else
-                                                    مجموع نقاط
+                                                        مجموع نقاط
                                                     @endif
                                                 </td>
                                                 <td>{{ $wheel->value }}</td>
@@ -204,7 +204,7 @@
                                     <label for="validationTextarea"
                                         class="form-label">{{ __('dashboard.value') }}</label>
                                     <input class="form-control is-invalid" id="validationTextarea"
-                                        placeholder="{{ __('dashboard.value') }}" type="number" min="1" step="1" name="value"
+                                        placeholder="{{ __('dashboard.value') }}" type="text" name="value"
                                         required>
                                 </div>
                             </form>
@@ -248,8 +248,7 @@
                                     <label for="validationTextarea"
                                         class="form-label">{{ __('dashboard.value') }}</label>
                                     <input class="form-control is-invalid" id="value"
-                                        placeholder="{{ __('dashboard.value') }}" type="number" min="1" step="1" name="value"
-                                        required>
+                                        placeholder="{{ __('dashboard.value') }}" type="text" name="value" required>
 
                                 </div>
                             </form>

@@ -100,11 +100,11 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td class="text-center"><img
                                                         class="bg-soft-primary rounded img-fluid avatar-40 me-3"
-                                                        src="{{ $order->image }}" alt="Category"></td>
+                                                        src="{{ asset($order->image) }}" alt="Category"></td>
                                                 <td><a
                                                         href="{{ route('orderDetials', $order->id) }}">{{ $order->orderNumber }}</a>
                                                 </td>
-                                                
+
                                                 <td>{{ $order->user->name }}</td>
                                                 <td>{{ $order->user->email }}</td>
                                                 <td>{{ $order->user->phone }}</td>
@@ -261,7 +261,7 @@
                                 <div>
                                     {{ $orders->links() }}
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>

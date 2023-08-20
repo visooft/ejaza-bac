@@ -47,7 +47,7 @@ class DataController extends Controller
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
                 $data[$key]["code"] = $country->code;
-                $data[$key]["flag"] = env('APP_URL') . 'Admin/images/countries/' . $country->flag;
+                $data[$key]["flag"] = asset( 'Admin/images/countries/' . $country->flag);
                 if ($request->header('lang') == "en") {
                     $data[$key]["name"] = $country->name_en;
                 } elseif ($request->header('lang') == "tr") {
@@ -101,7 +101,7 @@ class DataController extends Controller
                 } else {
                     $data[$key]["name"] = $country->name_ar;
                 }
-                $data[$key]["image"] = env('APP_URL') . 'Admin/images/country/' . $country->image;
+                $data[$key]["image"] = asset('Admin/images/country/' . $country->image);
             }
             return $this->returnData("data", ["travelCountry" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {

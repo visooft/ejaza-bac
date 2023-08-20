@@ -92,7 +92,7 @@ class AuthController extends Controller
                         'otp' => $otp,
                         'phone' => $request->phone,
                     ]);
-                    $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
+                    $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date', 'documentation']);
                     $data->token = $token;
                     $city = $this->countryModel::find($user->country_id);
                     if ($lang == "en") {
@@ -107,7 +107,7 @@ class AuthController extends Controller
                     }
 
                     if ($data->image) {
-                        $data->image = env('APP_URL') . 'Admin/images/users/' . $data->image;
+                        $data->image = asset('Admin/images/users/' . $data->image);
                     } else {
                         $data->image = "https://ui-avatars.com/api/?name=" . $data->name . ".png";
                     }
@@ -119,7 +119,7 @@ class AuthController extends Controller
                     return $this->returnError(401, __('api.notAllow'));
                 }
                 $user->update(['device_token' => $request->device_token, 'token' => $token]);
-                $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
+                $data = $this->userModel::where(['phone' => $request->phone])->first(['id','name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date', 'documentation']);
                 $data->token = $token;
                 $city = $this->countryModel::find($user->country_id);
                 if ($lang == "en") {
@@ -136,7 +136,7 @@ class AuthController extends Controller
                 ($data->nationality) ?: $data->nationality = "";
                 ($data->birth_date) ?: $data->birth_date = "";
                 if ($data->image) {
-                    $data->image = env('APP_URL') . 'Admin/images/users/' . $data->image;
+                    $data->image = asset('Admin/images/users/' . $data->image);
                 } else {
                     $data->image = "https://ui-avatars.com/api/?name=" . $data->name . ".png";
                 }
@@ -164,6 +164,7 @@ class AuthController extends Controller
                 'phone' => 'required|numeric|unique:users,phone',
                 'country_id' => 'required|exists:countries,id',
                 'password' => 'required|min:8',
+                'device_token' => 'required',
                 'confirm_password' => 'required|min:8',
             ];
 
@@ -187,6 +188,7 @@ class AuthController extends Controller
                 'nationality' => $request->nationality,
                 'birth_date' => $request->birth_date,
                 'link' => "https://visooft-code.com",
+                'device_token' => $request->device_token,
                 'points' => Setting::where('key', 'points')->first()->value,
             ]);
             $user = $this->userModel::where(['phone' => $request->phone])->first();
@@ -214,7 +216,7 @@ class AuthController extends Controller
                 'phone' => $request->phone,
             ]);
             $token = "Bearer " . $token;
-            $data = $this->userModel::where(['phone' => $request->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
+            $data = $this->userModel::where(['phone' => $request->phone])->first(['id','name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date', 'documentation']);
             $data->token = $token;
             $user->update(['token' => $token]);
             $city = $this->countryModel::find($user->country_id);
@@ -229,7 +231,7 @@ class AuthController extends Controller
                 $data->currency = $city->currency;
             }
             if ($data->image) {
-                $data->image = env('APP_URL') . 'Admin/images/users/' . $data->image;
+                $data->image = asset('Admin/images/users/' . $data->image);
             } else {
                 $data->image = "https://ui-avatars.com/api/?name=" . $data->name . ".png";
             }
@@ -264,7 +266,7 @@ class AuthController extends Controller
                 $user = $request->user();
                 $user = $this->userModel::where(['phone' => $user->phone])->first();
                 $user->update(['status' => 1, 'device_token' => $request->device_token, 'token' => $token]);
-                $data = $this->userModel::where(['phone' => $user->phone])->first(['name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date','documentation']);
+                $data = $this->userModel::where(['phone' => $user->phone])->first(['id','name', 'email', 'phone', 'link', 'image', 'gender', 'nationality', 'birth_date', 'documentation']);
                 $data->token = $token;
                 $city = $this->countryModel::find($request->user()->country_id);
                 if ($lang == "en") {
@@ -278,7 +280,7 @@ class AuthController extends Controller
                     $data->currency = $city->currency;
                 }
                 if ($data->image) {
-                    $data->image = env('APP_URL') . 'Admin/images/users/' . $data->image;
+                    $data->image = asset('Admin/images/users/' . $data->image);
                 } else {
                     $data->image = "https://ui-avatars.com/api/?name=" . $data->name . ".png";
                 }
@@ -492,7 +494,7 @@ class AuthController extends Controller
             ]);
             $user = $this->userModel::find($request->user()->id);
             if ($user->image) {
-                $user->image = env('APP_URL') . 'Admin/images/users/' . $user->image;
+                $user->image = asset('Admin/images/users/' . $user->image);
             } else {
                 $user->image = "https://ui-avatars.com/api/?name=" . $user->name . ".png";
             }
@@ -508,7 +510,7 @@ class AuthController extends Controller
         $lang = $this->returnLang($request);
         $this->appModel::setLocale($lang);
         try {
-            $data = $this->userModel::where(['id' => $request->user()->id])->first(['name', 'email', 'phone', 'link', 'image', 'country_id', 'gender', 'nationality', 'birth_date','documentation']);
+            $data = $this->userModel::where(['id' => $request->user()->id])->first(['id','name', 'email', 'phone', 'link', 'image', 'country_id', 'gender', 'nationality', 'birth_date', 'documentation']);
             $city = $this->countryModel::find($data->country_id);
             if ($lang == "en") {
                 $data->country = $city->name_en;
@@ -518,7 +520,7 @@ class AuthController extends Controller
                 $data->country = $city->name_ar;
             }
             if ($data->image) {
-                $data->image = env('APP_URL') . 'Admin/images/users/' . $data->image;
+                $data->image = asset('Admin/images/users/' . $data->image);
             } else {
                 $data->image = "https://ui-avatars.com/api/?name=" . $data->name . ".png";
             }
@@ -582,6 +584,9 @@ class AuthController extends Controller
                 'phone' => 'nullable|string',
                 'payment_type' => 'required|in:cash,online,wallet',
                 'status' => 'required|in:0,1',
+                'city_id' => 'nullable|exists:cities,id',
+                'street_id' => 'nullable|string',
+                'address' => 'nullable|string',
             ];
             $validator = $this->validateModel::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -618,7 +623,7 @@ class AuthController extends Controller
                         $this->addition_value = $settin->value;
                     }
                 }
-                $totalPrice = $house->price * $request->count * $request->passengers + $this->addition_value;
+                $totalPrice = $house->price * $request->count + $this->addition_value;
             }
             if ($request->coupon) {
                 $coupon = Coupon::where('coupon', $request->coupon)->first();
@@ -626,7 +631,13 @@ class AuthController extends Controller
             } else {
                 $total = $totalPrice;
             }
-//            if ($request->payment_type == "wallet") {
+            if ($house->category_id == 7){
+                $expiried_at = Carbon::now()->addHours($request->count);
+                $expiried_end = $expiried_at->format('Y-m-d H:i');
+            } else {
+                $expiried_end = null;
+            }
+            //            if ($request->payment_type == "wallet") {
 //                $wallet = $request->user()->wallet;
 //                if ($total > $wallet) {
 //                    return $this->returnErrorData('data', ['payment_type' => $request->payment_type], __('api.notEnugth'));
@@ -660,13 +671,25 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'payment_type' => $request->payment_type,
+                'city_id' => $request->city_id,
+                'street_id' => $request->street_id,
+                'address' => $request->address,
+                'expiried' => $expiried_end
             ]);
 
-            Notifications::create([
-                'user_id' => $house->user_id,
-                'subject' => 'تم حجز خدمتك بنجاح',
-                'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name,
-            ]);
+            if ($request->house_id == 7) {
+                Notifications::create([
+                    'user_id' => $house->user_id,
+                    'subject' => 'تم حجز خدمتك بنجاح',
+                    'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name . 'وبرجاء التوجة اللي العنوان التالي: ' . $request->address,
+                ]);
+            } else {
+                Notifications::create([
+                    'user_id' => $house->user_id,
+                    'subject' => 'تم حجز خدمتك بنجاح',
+                    'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name,
+                ]);
+            }
 
             $firebaseToken = User::where('id', $house->user_id)->pluck('device_token')->toArray();
             $setting = Setting::where('key', 'firebaseKey')->first();
@@ -674,13 +697,23 @@ class AuthController extends Controller
                 $SERVER_API_KEY = $setting->value;
             }
 
-            $data = [
-                "registration_ids" => $firebaseToken,
-                "notification" => [
-                    "title" => "تم حجز خدمتك بنجاح",
-                    "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name,
-                ]
-            ];
+            if ($request->house_id != 7) {
+                $data = [
+                    "registration_ids" => $firebaseToken,
+                    "notification" => [
+                        "title" => "تم حجز خدمتك بنجاح",
+                        "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name,
+                    ]
+                ];
+            } else {
+                $data = [
+                    "registration_ids" => $firebaseToken,
+                    "notification" => [
+                        "title" => "تم حجز خدمتك بنجاح",
+                        "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name . 'وبرجاء التوجة اللي العنوان التالي: ' . $request->address,
+                    ]
+                ];
+            }
 
             $dataString = json_encode($data);
             $headers = [

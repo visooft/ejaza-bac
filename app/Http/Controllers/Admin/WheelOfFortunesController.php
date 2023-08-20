@@ -24,7 +24,7 @@ class WheelOfFortunesController extends Controller
     {
         $request->validate([
             'key' => 'required|string',
-            'value' => 'required|numeric',
+            'value' => 'required|string',
         ]);
 
         $this->wheel_of_fortunesModel::create([
@@ -40,7 +40,7 @@ class WheelOfFortunesController extends Controller
         $request->validate([
             'infoId' => 'required|exists:wheel_of_fortunes,id',
             'key' => 'required|string',
-            'value' => 'required|numeric',
+            'value' => 'required|string',
         ]);
         $wheel = $this->wheel_of_fortunesModel::findOrFail($request->infoId);
         $wheel->update([
