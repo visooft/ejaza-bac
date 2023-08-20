@@ -45,6 +45,7 @@ use Illuminate\Http\Request;
 use App\Models\Splach;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
+use Translate;
 
 class HomeScreenController extends Controller
 {
@@ -611,6 +612,9 @@ class HomeScreenController extends Controller
             $start = Carbon::now()->startOfDay();
             $end = Carbon::now()->endOfDay();
             $wheels = $this->wheelModel::where(['status' => 1])->get(['id', 'key', 'value']);
+            foreach ($wheels as $wheel) {
+                $wheel->value = Translate::trans($wheel->value, $lang);
+            }
             foreach ($wheels as $wheel) {
                 $wheelUser = WheelUsers::where('user_id', $request->user()->id)->whereBetween('created_at', [$start, $end])->first();
                 (!$wheelUser) ? $wheel->canTry = true : $wheel->canTry = false;

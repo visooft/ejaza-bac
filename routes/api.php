@@ -19,11 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['api', 'localize']], function () {
 
     if (request()->header('Authorization')) {
         Route::group(
-            ['middleware' => 'auth:sanctum'],
+            [
+                'middleware' => ['auth:sanctum', 'localize']
+            ],
             function () {
                 Route::post('/order', [AuthController::class, 'order']);
                 Route::post('/addCoupon', [AuthController::class, 'addCoupon']);

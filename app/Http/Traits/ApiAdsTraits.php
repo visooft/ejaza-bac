@@ -227,7 +227,7 @@ trait ApiAdsTraits
                     $data[$key]["go"] = $ad->go;
                     $data[$key]["back"] = $ad->back;
                     $data[$key]["count_days"] = $ad->count_days;
-                    $data[$key]["travel_name"] = Translate::trans($ad->travel_name);
+                    $data[$key]["travel_name"] = ($ad->travel_name) ? Translate::trans($ad->travel_name) : "";
                     if ($ad->is_pay == 1) {
                         $orders = Order::where(['housings_id' => $ad->id, 'status' => 0])->where('from', '!=', null)->orderByDesc('id')->get(['from', 'to']);
                         foreach ($orders as $order) {
