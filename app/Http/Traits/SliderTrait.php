@@ -12,7 +12,7 @@ trait SliderTrait
     {
         $sliders = $this->sliderModel::orderBy('id', 'DESC')->get();
         foreach ($sliders as $slider) {
-            $slider->image = env('APP_URL') . "Admin/images/sliders/" . $slider->image;
+            $slider->image =  asset("Admin/images/sliders/" . $slider->image);
             if (app()->getLocale() == "tr") {
                 $slider->title = $slider->title_tr;
                 $slider->desc = $slider->desc_tr;

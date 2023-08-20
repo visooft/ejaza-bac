@@ -158,6 +158,43 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+
+        'password' => 'Password',
+        'phone' => 'Phone number',
+        'name' => 'Name',
+        'email' => 'Email address',
+        'password_confirm' => 'Password confirmation',
+        'address' => 'Address',
+        'price' => 'Price',
+        'count' => 'Count',
+        'typeContact' => 'Contact type',
+        'message' => 'Message',
+        'type' => 'Type',
+        'page' => 'Page number',
+        'per_page' => 'Number of products per page',
+        'total' => 'Total',
+        'current_password' => 'Current password',
+        'image' => 'Image',
+        'userName' => 'Email or mobile number',
+        'city' => 'City',
+        'comment' => 'Comment',
+        'deliveryRate' => 'Delivery rating',
+        'storeRate' => 'Store or restaurant rating',
+        'walletValue' => 'Wallet value',
+        'word' => 'Search word',
+        'lat_From' => 'Pickup location latitude',
+        'long_From' => 'Pickup location longitude',
+        'lat_To' => 'Delivery location latitude',
+        'long_To' => 'Delivery location longitude',
+        'package_type' => 'Package type',
+        'orderStatus' => 'Order status',
+        'bankNumber' => 'Bank number',
+        'IBAN' => 'IBAN',
+        'accountNumber' => 'Account number',
+        'bankName' => 'Bank name',
+        'Ministry_approval' => 'Ministry approval',
+
+    ],
 
 ];

@@ -38,7 +38,7 @@ trait ApiCityTraits
             } else {
                 $city->name = $city->name_ar;
             }
-            $city->image = env('APP_URL') . "Admin/images/cities/" . $city->image;
+            $city->image = asset("Admin/images/cities/" . $city->image);
             $cityData[$key]['id'] = $city->id;
             $cityData[$key]['title'] = $city->name;
             $cityData[$key]['image'] = $city->image;

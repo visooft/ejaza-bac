@@ -15,7 +15,7 @@ trait SubCategoryTrait
         $subCategories = $this->subCategoryModel::where('category_id', $id)->orderBy('id', 'DESC')->get();
         foreach ($subCategories as $sub) {
 
-            $sub->image = env('APP_URL') . "Admin/images/subCategory/" . $sub->image;
+            $sub->image = asset("Admin/images/subCategory/" . $sub->image);
         }
         return $subCategories;
     }

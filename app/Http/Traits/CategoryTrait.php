@@ -18,7 +18,7 @@ trait CategoryTrait{
             else {
                 $category->name = $category->name_en;
             }
-            $category->image = env('APP_URL')."Admin/images/category/".$category->image;
+            $category->image = asset("Admin/images/category/".$category->image);
         }
         return $categories;
     }

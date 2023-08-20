@@ -22,7 +22,7 @@ trait ApiCategoryTrait
             } else {
                 $category->name = $category->name_ar;
             }
-            $category->image = env('APP_URL') . "Admin/images/category/" . $category->image;
+            $category->image = asset("Admin/images/category/" . $category->image);
             $categoryData[$key]['id'] = $category->id;
             $categoryData[$key]['title'] = $category->name;
             $categoryData[$key]['image'] = $category->image;

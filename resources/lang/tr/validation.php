@@ -158,6 +158,41 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'şifre',
+        'phone' => 'telefon',
+        'name' => 'isim',
+        'email' => 'e-posta',
+        'password_confirm' => 'şifreyi onayla',
+        'address' => 'adres',
+        'price' => 'fiyat',
+        'count' => 'sayı',
+        'typeContact' => 'iletişim türü',
+        'message' => 'mesaj',
+        'type' => 'mesaj türü',
+        'page' => 'sayfa numarası',
+        'per_page' => 'sayfadaki ürün sayısı',
+        'total' => 'toplam',
+        'cuurnt_password' => 'mevcut şifre',
+        'image' => 'resim',
+        'userName' => 'kullanıcı adı',
+        'city' => 'şehir',
+        'commenet' => 'yorum',
+        'delivaryRate' => 'teslimat değerlendirmesi',
+        'storeRate' => 'mağaza veya restoran değerlendirmesi',
+        'walletvalue' => 'cüzdan değeri',
+        'word' => 'arama kelimesi',
+        'lat_From' => 'paketin alındığı konum',
+        'long_From' => 'paketin alındığı konum',
+        'lat_To' => 'paketin teslim edileceği konum',
+        'long_To' => 'paketin teslim edileceği konum',
+        'package_type' => 'paket türü',
+        'orderStatus' => 'sipariş durumu',
+        'bankNumber' => 'banka numarası',
+        'IBAN' => 'IBAN',
+        'accountNumber' => 'hesap numarası',
+        'bankName' => 'banka adı',
+        'Ministry_approval' => 'Bakanlık onayı'
+    ],
 
 ];

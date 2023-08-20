@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Moyasar\Moyasar;
+use Translate;
 
 class AuthController extends Controller
 {
@@ -82,7 +83,7 @@ class AuthController extends Controller
                     $responce = $this->_fireSMS($mobile, $otp);
                     $data = json_decode($responce);
                     if ($data->status == "F") {
-                        return $this->returnError(403, 'برجاء مراجعة الدعم الفني');
+                        return $this->returnError(403, __('api.errorMessage'));
                     }
                     $token = $user->createToken("API TOKEN")->plainTextToken;
                     $token = "Bearer " . $token;
@@ -680,14 +681,14 @@ class AuthController extends Controller
             if ($request->house_id == 7) {
                 Notifications::create([
                     'user_id' => $house->user_id,
-                    'subject' => 'تم حجز خدمتك بنجاح',
-                    'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name . 'وبرجاء التوجة اللي العنوان التالي: ' . $request->address,
+                    'subject' => Translate::trans('تم حجز خدمتك بنجاح'),
+                    'message' => Translate::trans('تم حجز خدمتك بنجاح من قبل العميل') . $request->user()->name . Translate::trans('وبرجاء التوجة اللي العنوان التالي: ') . $request->address,
                 ]);
             } else {
                 Notifications::create([
                     'user_id' => $house->user_id,
-                    'subject' => 'تم حجز خدمتك بنجاح',
-                    'message' => 'تم حجز خدمتك بنجاح من قبل العميل' . $request->user()->name,
+                    'subject' => Translate::trans('تم حجز خدمتك بنجاح'),
+                    'message' =>Translate::trans('تم حجز خدمتك بنجاح من قبل العميل') . $request->user()->name,
                 ]);
             }
 
@@ -701,16 +702,16 @@ class AuthController extends Controller
                 $data = [
                     "registration_ids" => $firebaseToken,
                     "notification" => [
-                        "title" => "تم حجز خدمتك بنجاح",
-                        "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name,
+                        "title" => Translate::trans("تم حجز خدمتك بنجاح"),
+                        "body" => Translate::trans("تم حجز خدمتك بنجاح من قبل العميل") . $request->user()->name,
                     ]
                 ];
             } else {
                 $data = [
                     "registration_ids" => $firebaseToken,
                     "notification" => [
-                        "title" => "تم حجز خدمتك بنجاح",
-                        "body" => "تم حجز خدمتك بنجاح من قبل العميل" . $request->user()->name . 'وبرجاء التوجة اللي العنوان التالي: ' . $request->address,
+                        "title" => Translate::trans("تم حجز خدمتك بنجاح"),
+                        "body" => Translate::trans("تم حجز خدمتك بنجاح من قبل العميل") . $request->user()->name . Translate::trans('وبرجاء التوجة اللي العنوان التالي: ') . $request->address,
                     ]
                 ];
             }
@@ -811,20 +812,23 @@ class AuthController extends Controller
             }
             $country = Country::find($request->country_id);
             if (!$country) {
-                return $this->returnError(403, 'هذا البلد غير موجود');
+                return $this->returnError(403, Translate::trans('هذا البلد غير موجود'));
             } else {
                 $user = User::find(auth()->id());
                 $user->update([
                     'country_id' => $request->country_id
                 ]);
             }
-            return $this->returnData('data', null, 'تم تغيير البلد بنجاح');
+            return $this->returnData('data', null, Translate::trans('تم تغيير البلد بنجاح'));
         } catch (\Exception $e) {
             return $this->returnError(403, $e->getMessage());
         }
     }
 
 
+    /**
+     * @throws \ErrorException
+     */
     public function contact()
     {
         $validator = Validator::make(request()->all(), [
@@ -837,7 +841,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'حدث خطأ ما',
+                'message' => Translate::trans('حدث خطأ ما'),
                 'data' => $validator->errors(),
             ]);
         }
@@ -852,13 +856,13 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'تم ارسال الرسالة بنجاح',
+                'message' => Translate::trans('تم ارسال الرسالة بنجاح'),
                 'data' => $data,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'حدث خطأ ما',
+                'message' => Translate::trans('حدث خطأ ما'),
                 'data' => $e->getMessage(),
             ]);
         }

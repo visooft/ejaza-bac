@@ -14,7 +14,7 @@ trait ApiSliderTraits
         $sliderData = [];
         $sliders = $this->sliderModel::where('status', 1)->orderBy('id', 'DESC')->get();
         foreach ($sliders as $key => $slider) {
-            $slider->image = env('APP_URL') . "Admin/images/sliders/" . $slider->image;
+            $slider->image = asset("Admin/images/sliders/" . $slider->image);
             if (app()->getLocale() == "tr") {
                 $slider->title = $slider->title_tr;
                 $slider->desc = $slider->desc_tr;
@@ -32,13 +32,13 @@ trait ApiSliderTraits
         }
         return $sliderData;
     }
-    
+
     private function getAdsSliders()
     {
         $sliderData = [];
         $sliders = $this->spaceModel::where('status', 1)->orderBy('id', 'DESC')->get();
         foreach ($sliders as $key => $slider) {
-            $slider->image = env('APP_URL') . "Admin/images/sliders/" . $slider->image;
+            $slider->image = asset("Admin/images/sliders/" . $slider->image);
             if (app()->getLocale() == "tr") {
                 $slider->title = $slider->title_tr;
                 $slider->desc = $slider->desc_tr;
@@ -61,7 +61,7 @@ trait ApiSliderTraits
         $sliderData = [];
         $sliders = $this->splachModel::orderBy('id', 'DESC')->get();
         foreach ($sliders as $key => $slider) {
-            $slider->image = env('APP_URL') . "Admin/images/sliders/" . $slider->image;
+            $slider->image = asset("Admin/images/sliders/" . $slider->image);
             if (app()->getLocale() == "tr") {
                 $slider->title = $slider->title_tr;
                 $slider->desc = $slider->desc_tr;

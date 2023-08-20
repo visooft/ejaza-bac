@@ -22,13 +22,13 @@ class Payment extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'تم جلب البيانات بنجاح',
+                'message' => __('api.successMessage'),
                 'data' => $pay,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'حدث خطأ ما',
+                'message' => __('api.errorMessage'),
                 'data' => $e->getMessage()
             ]);
         }
@@ -57,13 +57,13 @@ class Payment extends Controller
             $pay->save();
             return response()->json([
                 'status' => true,
-                'message' => 'تم اضافة البيانات بنجاح',
+                'message' => __('api.successMessage'),
                 'data' => $pay
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'حدث خطأ ما',
+                'message' => __('api.errorMessage'),
                 'data' => $e->getMessage()
             ]);
         }
