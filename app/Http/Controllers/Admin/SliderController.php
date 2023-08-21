@@ -274,6 +274,9 @@ class SliderController extends Controller
             'title_ar' => 'required|string',
             'title_en' => 'required|string',
             'title_tr' => 'required|string',
+            'desc_ar' => 'required|string',
+            'desc_en' => 'required|string',
+            'desc_tr' => 'required|string',
             'image' => 'required|file|mimes:jpeg,jpg,png,gif|max:2048'
         ]);
 
