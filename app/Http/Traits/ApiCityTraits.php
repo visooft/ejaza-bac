@@ -24,7 +24,7 @@ trait ApiCityTraits
             $cityData[0]['title'] = $tr->translate("all");
         } elseif (app()->getLocale() == "en") {
             $cityData[0]['id'] = "all";
-            $cityData[0]['title'] = $ne->translate("all");
+            $cityData[0]['title'] = $en->translate("all");
         } else {
             $cityData[0]['id'] = "all";
             $cityData[0]['title'] = "الكل";

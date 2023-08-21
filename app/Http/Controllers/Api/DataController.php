@@ -141,9 +141,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'market'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
+                if (app()->getLocale() == "en") {
                     $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
+                } elseif (app()->getLocale() == "tr") {
                     $data[$key]["name"] = $country->name_tr;
                 } else {
                     $data[$key]["name"] = $country->name_ar;
