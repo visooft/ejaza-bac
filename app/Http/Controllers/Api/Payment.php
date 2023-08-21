@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment as PaymentModel;
+use Translate;
 
 class Payment extends Controller
 {
@@ -11,7 +12,9 @@ class Payment extends Controller
     {
         try {
             $pay = PaymentModel::where('status', 1)->get();
-
+            foreach ($pay as $p) {
+                $p->name = Translate::trans($p->name);
+            }
             foreach ($pay as $p) {
                 $images = array();
                 foreach ($p->image as $image) {
