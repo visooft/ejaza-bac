@@ -16,6 +16,7 @@ use App\Models\Social;
 use App\Models\TermsAndConditions;
 use App\Models\travelType;
 use Illuminate\Http\Request;
+use Translate;
 
 class DataController extends Controller
 {
@@ -43,18 +44,12 @@ class DataController extends Controller
         $this->appModel::setLocale($lang);
         try {
             $data = [];
-            $countries = $this->countryModel::where('status', 1)->get(['id', 'name_ar', 'name_en', 'name_tr','code','flag']);
+            $countries = $this->countryModel::where('status', 1)->get(['id', 'name_ar', 'name_en', 'name_tr', 'code', 'flag']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
                 $data[$key]["code"] = $country->code;
-                $data[$key]["flag"] = asset( 'Admin/images/countries/' . $country->flag);
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+                $data[$key]["flag"] = asset('Admin/images/countries/' . $country->flag);
+                $data[$key]["name"] = Translate::trans($country->name_ar);
             }
             return $this->returnData("data", ["countries" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -71,13 +66,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'accompanyings'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["accompanyings" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -94,13 +85,9 @@ class DataController extends Controller
             $countries = $this->travelCountryModel::where(['status' => 1, 'type' => 'travel'])->get(['id', 'name_ar', 'name_en', 'name_tr', 'image']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
                 $data[$key]["image"] = asset('Admin/images/country/' . $country->image);
             }
             return $this->returnData("data", ["travelCountry" => $data], __('api.successMessage'));
@@ -118,13 +105,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'language'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["languages" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -141,13 +124,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'market'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if (app()->getLocale() == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif (app()->getLocale() == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["markitingType" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -164,13 +143,8 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'travel'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["travelType" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -187,13 +161,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'event'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["eventType" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -210,13 +180,9 @@ class DataController extends Controller
             $countries = $this->travelTypeModel::where(['status' => 1, 'type' => 'gide'])->get(['id', 'name_ar', 'name_en', 'name_tr']);
             foreach ($countries as $key => $country) {
                 $data[$key]["id"] = $country->id;
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $country->name_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $country->name_tr;
-                } else {
-                    $data[$key]["name"] = $country->name_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($country->name_ar);
+
             }
             return $this->returnData("data", ["gideType" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -256,13 +222,9 @@ class DataController extends Controller
             $data = [];
             $abouts = $this->aboutModel::get(['about_ar', 'about_en', 'about_tr']);
             foreach ($abouts as $key => $about) {
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $about->about_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $about->about_tr;
-                } else {
-                    $data[$key]["name"] = $about->about_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($about->about_ar);
+
             }
             return $this->returnData("data", ["about" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -278,13 +240,9 @@ class DataController extends Controller
             $data = [];
             $terms = $this->termsModel::get(['term_ar', 'term_en', 'term_tr']);
             foreach ($terms as $key => $term) {
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $term->term_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $term->term_tr;
-                } else {
-                    $data[$key]["name"] = $term->term_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($term->term_ar);
+
             }
             return $this->returnData("data", ["terms" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -300,16 +258,10 @@ class DataController extends Controller
             $data = [];
             $questions = $this->questionsModel::get(['title_ar', 'title_en', 'title_tr', 'answer_ar', 'answer_en', 'answer_tr']);
             foreach ($questions as $key => $question) {
-                if ($request->header('lang') == "en") {
-                    $data[$key]["title"] = $question->title_en;
-                    $data[$key]["answer"] = $question->answer_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["title"] = $question->title_tr;
-                    $data[$key]["answer"] = $question->answer_tr;
-                } else {
-                    $data[$key]["title"] = $question->title_ar;
-                    $data[$key]["answer"] = $question->answer_ar;
-                }
+
+                $data[$key]["title"] = Translate::trans($question->title_ar);
+                $data[$key]["answer"] = Translate::trans($question->answer_ar);
+
             }
             return $this->returnData("data", ["questions" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
@@ -325,13 +277,9 @@ class DataController extends Controller
             $data = [];
             $privacies = $this->privecModel::get(['privace_ar', 'privace_en', 'privace_tr']);
             foreach ($privacies as $key => $about) {
-                if ($request->header('lang') == "en") {
-                    $data[$key]["name"] = $about->privace_en;
-                } elseif ($request->header('lang') == "tr") {
-                    $data[$key]["name"] = $about->privace_tr;
-                } else {
-                    $data[$key]["name"] = $about->privace_ar;
-                }
+
+                $data[$key]["name"] = Translate::trans($about->privace_ar);
+
             }
             return $this->returnData("data", ["privacies" => $data], __('api.successMessage'));
         } catch (\Throwable $th) {
