@@ -1034,6 +1034,7 @@ class HomeScreenController extends Controller
             $comment = Comments::where('housings_id', $id)->get();
             foreach ($comment as $com) {
                 $com->user_name = $com->user->name;
+                $com->commenet = Translate::trans($com->commenet);
             }
             return $this->returnData("data", $comment, __('api.successMessage'));
         } catch (\Exception $e) {
