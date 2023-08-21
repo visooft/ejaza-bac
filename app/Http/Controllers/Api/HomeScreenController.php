@@ -107,18 +107,9 @@ class HomeScreenController extends Controller
             }
             $title = Setting::where('key', 'title')->first();
             $desc = Setting::where('key', 'desc')->first();
-            $tr = new GoogleTranslate('tr');
-            $en = new GoogleTranslate('en');
-            if (app()->getLocale() == "en") {
-                $home_text = $en->translate($title->value);
-                $desc_text = $en->translate($desc->value);
-            } elseif (app()->getLocale() == "tr") {
-                $home_text = $tr->translate($title->value);
-                $desc_text = $tr->translate($desc->value);
-            } else {
-                $home_text = $title->value;
-                $desc_text = $desc->value;
-            }
+            $home_text = Translate::trans($title->value);
+            $desc_text = Translate::trans($desc->value);
+
 
             return $this->returnData('data', ["sliders" => $sliders, "Adspace" => $spaceSlider, "categories" => $categories, "cities" => $cities, "countNotification" => $countNotification, "home_text" => $home_text, "desc_text" => $desc_text], __('api.successMessage'));
         } catch (\Throwable $th) {
