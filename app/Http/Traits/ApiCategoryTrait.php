@@ -12,6 +12,9 @@ trait ApiCategoryTrait
         return $this->categoryModel::find($categoryId);
     }
 
+    /**
+     * @throws \ErrorException
+     */
     private function getCategories()
     {
         $categoryData = [];
@@ -19,7 +22,7 @@ trait ApiCategoryTrait
         foreach ($categories as $key => $category) {
             $category->image = asset("Admin/images/category/" . $category->image);
             $categoryData[$key]['id'] = $category->id;
-            $categoryData[$key]['title'] = Translate::trans($category->name);
+            $categoryData[$key]['title'] = Translate::trans($category->name_ar);
             $categoryData[$key]['image'] = $category->image;
         }
         return $categoryData;
