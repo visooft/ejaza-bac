@@ -129,7 +129,7 @@ class SliderController extends Controller
         ]);
         return back()->with('done', __('dashboard.showSliderMessage'));
     }
-    
+
     public function Adspace()
     {
         $sliders = $this->spaceModel::get();
@@ -251,12 +251,12 @@ class SliderController extends Controller
         ]);
         return back()->with('done', 'تم اظهار المساحة الاعلانية');
     }
-    
+
     public function splach()
     {
         $sliders = $this->splachModel::get();
         foreach ($sliders as $slider) {
-            $slider->image = env('APP_URL') . "Admin/images/sliders/" . $slider->image;
+            $slider->image = asset("Admin/images/sliders/" . $slider->image);
             if (app()->getLocale() == "tr") {
                 $slider->title = $slider->title_tr;
             } elseif (app()->getLocale() == "en") {
@@ -285,6 +285,9 @@ class SliderController extends Controller
             'title_ar' => $request->title_ar,
             'title_en' => $request->title_en,
             'title_tr' => $request->title_tr,
+            'desc_ar' => $request->desc_ar,
+            'desc_en' => $request->desc_en,
+            'desc_tr' => $request->desc_tr,
         ]);
 
         return back()->with('done', __('dashboard.addSliderMessage'));
@@ -314,6 +317,9 @@ class SliderController extends Controller
             'title_ar' => $request->title_ar,
             'title_en' => $request->title_en,
             'title_tr' => $request->title_tr,
+            'desc_ar' => $request->desc_ar,
+            'desc_en' => $request->desc_en,
+            'desc_tr' => $request->desc_tr,
         ]);
 
         return back()->with('done', __('dashboard.updateSliderMessage'));
